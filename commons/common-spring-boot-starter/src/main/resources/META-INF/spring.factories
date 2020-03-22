@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.openea.common.filter.TenantFilter,\
+org.openea.common.filter.TraceFilter

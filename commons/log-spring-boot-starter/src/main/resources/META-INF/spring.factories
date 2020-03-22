@@ -1,0 +1,8 @@
+org.springframework.context.ApplicationContextInitializer=\
+org.openea.log.config.TtlMDCAdapterInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.openea.log.config.LogAutoConfigure,\
+org.openea.log.service.impl.LoggerAuditServiceImpl,\
+org.openea.log.service.impl.DbAuditServiceImpl,\
+org.openea.log.aspect.AuditLogAspect

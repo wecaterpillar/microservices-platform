@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.zlt</groupId>
-    <artifactId>central-platform</artifactId>
+    <groupId>org.openea</groupId>
+    <artifactId>ea-msp</artifactId>
     <version>3.4.0</version>
     <packaging>pom</packaging>
 
@@ -51,10 +51,10 @@
         <spring-cloud-dependencies.version>Greenwich.SR5</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.12.RELEASE</spring-boot-maven-plugin.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
-        <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
+        <sonar.exclusions>job/**/*, register/**/*, web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
         <docker.volumes>/tmp</docker.volumes>
-        <docker.image.prefix>hub.zlt.com:8080/microservices-platform</docker.image.prefix>
+        <docker.image.prefix>hub.openea.com:8080/microservices-platform</docker.image.prefix>
         <docker.java.security.egd>-Djava.security.egd=file:/dev/./urandom</docker.java.security.egd>
         <docker.java.opts>-Xms128m -Xmx128m</docker.java.opts>
     </properties>
@@ -95,53 +95,53 @@
         <dependencies>
             <!-- 自定义 starter -->
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-common-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>common-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-db-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>db-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-log-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>log-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-redis-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>redis-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-swagger2-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>swagger2-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-ribbon-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>ribbon-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-auth-client-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>auth-client-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>sentinel-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-config</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-common-core</artifactId>
+                <groupId>org.openea</groupId>
+                <artifactId>common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -299,7 +299,7 @@
                 <version>${fastdfs-client.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zlt</groupId>
+                <groupId>org.openea</groupId>
                 <artifactId>search-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -380,6 +380,14 @@
         </pluginManagement>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>openmall-opentech-share</id>
+            <name>share</name>
+            <url>https://openmall-maven.pkg.coding.net/repository/opentech/share/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>aliyun-repos</id>
@@ -388,57 +396,41 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-    </repositories>
-    <distributionManagement>
         <repository>
-            <id>releases</id>
-            <name>releases Repository</name>
-            <url>http://192.168.28.138:8081/repository/maven-releases/</url>
+            <id>openmall-opentech-share</id>
+            <name>share</name>
+            <url>https://openmall-maven.pkg.coding.net/repository/opentech/share/</url>
         </repository>
+    </repositories>
 
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://192.168.28.138:8081/repository/maven-snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-repos</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <modules>
         <!-- 公共 -->
-        <module>zlt-commons</module>
+        <module>commons</module>
         <!-- 认证 -->
-        <module>zlt-uaa</module>
+        <module>uaa</module>
         <!-- 网关 -->
-        <module>zlt-gateway</module>
+        <module>gateway</module>
         <!-- 业务 -->
-        <module>zlt-business</module>
+        <module>business</module>
         <!-- 前端 -->
-        <module>zlt-web</module>
+        <module>web</module>
         <!-- 任务 -->
-        <module>zlt-job</module>
+        <module>job</module>
         <!-- 监控 -->
-        <module>zlt-monitor</module>
+        <module>monitor</module>
         <!-- 事务 -->
-        <module>zlt-transaction</module>
+        <module>transaction</module>
         <!-- 配置 -->
-        <module>zlt-config</module>
+        <module>config</module>
         <!-- demo -->
-        <module>zlt-demo</module>
+        <module>demo</module>
     </modules>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>LeTao Zhu</name>
-            <email>zltdiablo@163.com</email>
-            <organizationUrl>https://github.com/zlt2000</organizationUrl>
-            <url>https://blog.csdn.net/zlt2000</url>
-        </developer>
-    </developers>
 </project>

@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${openea.datasource.ip}:3306/file_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: ${openea.datasource.username}
+    password: ${openea.datasource.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: org.openea.file.model
+  global-config:
+    db-config:
+      id-type: INPUT
+
+openea:
+  file-server:
+    type: fastdfs
+    fdfs:
+      web-url: ${openea.fdfs.web-url}
+    #oss配置
+    #oss:
+    #  access-key: tpi8mObnfzZi4ggBX8Bw7zydjoTQ0WeML3RkPKsX
+    #  accessKeySecret: HZBXmSyUTy-haYp0KbBTtsil-GoKjVS2kDKT8Yow
+    #  endpoint: http://pkqtmn0p1.bkt.clouddn.com
+    #  bucketName: public-oss
+    #  domain:
+  swagger:
+    enabled: true
+    title: 文件中心
+    description: 文件中心接口文档
+    version: 1.0
+    base-package: org.openea.file.controller
+  #多租户配置
+  tenant:
+    enable: true
+
+#fastDFS配置
+fdfs:
+  soTimeout: 1500
+  connectTimeout: 600
+  trackerList: ${openea.fdfs.trackerList}

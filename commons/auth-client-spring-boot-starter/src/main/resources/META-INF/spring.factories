@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.openea.oauth2.common.config.SecurityPropertiesConfig

@@ -1,0 +1,18 @@
+spring:
+  data:
+    elasticsearch:
+      cluster-name: ${openea.elasticsearch.cluster-name}
+      cluster-nodes: ${openea.elasticsearch.cluster-nodes}:9300
+  elasticsearch:
+    rest:
+      uris: ${openea.elasticsearch.cluster-nodes}:9200
+
+openea:
+  indices:
+    show: sys-log-*, mysql-slowlog-*, sys_user, point-log-*, audit-log-*
+  swagger:
+    enabled: true
+    title: 搜索中心
+    description: 搜索中心接口文档
+    version: 1.0
+    base-package: org.openea.search.controller
