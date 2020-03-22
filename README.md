@@ -13,10 +13,31 @@
 * 提供应用管理，方便第三方系统接入，**支持多租户(应用隔离)**
 * 引入组件化的思想实现高内聚低耦合并且高度可配置化
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
-* 非常适合学习和企业中使用
 
+### 快速启动
 
-&nbsp;
+必要启动模块 
+- 启动认证中心uaa
+    - 运行 UaaServerApp
+- 启动用户中心bussiness/user-center
+    - 运行 UserCenterApp
+- 启动网关gateway/sc-gateway
+    - 运行 sc-gateway的org.openea.SCGatewayApp
+- 启动前端工程web/back-web
+    - 运行 BackWebApplication
+http://127.0.0.1:8066
+
+- Demo账号
+  * 账号密码：admin/admin
+  * APM监控账号密码：admin/admin
+  * Grafana账号：zlt/zlt123
+  * txlcn事务管理器密码：admin
+  * 任务管理账号密码：admin/123456
+  * Sentinel：sentinel/sentinel
+
+- 单点登录demo (demo/sso-demo) 
+  * **ss-sso**：使用springSecurity来实现自动单点登录，非前后端分离   
+  * **web-sso**：前后端分离的单点登录
 
 ## 2. 项目总体架构图
 ![mark](doc/img/zlt-arch.jpg)
