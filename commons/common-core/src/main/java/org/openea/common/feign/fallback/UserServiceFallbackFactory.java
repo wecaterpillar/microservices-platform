@@ -10,11 +10,8 @@ import org.springframework.stereotype.Component;
 /**
  * userService降级工场
  *
- * @author zlt
- * @date 2019/1/18
  */
 @Slf4j
-@Component
 public class UserServiceFallbackFactory implements FallbackFactory<UserService> {
     @Override
     public UserService create(Throwable throwable) {

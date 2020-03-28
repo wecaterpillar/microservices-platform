@@ -2,6 +2,7 @@ package org.openea.oauth2.common.store;
 
 import org.openea.common.model.SysUser;
 import org.openea.oauth2.common.converter.CustomUserAuthenticationConverter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -20,9 +21,8 @@ import java.util.Map;
 /**
  * 认证服务器使用 JWT RSA 非对称加密令牌
  *
- * @author zlt
- * @date 2018/7/24 16:21
  */
+@ConditionalOnProperty(prefix = "openea.oauth2.token.store", name = "type", havingValue = "authJwt")
 public class AuthJwtTokenStore {
 
     @Bean("keyProp")

@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.common.exceptions.InvalidClientExcept
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
@@ -21,11 +22,13 @@ import java.util.List;
  * 注意对oauth_client_details清楚redis db部分数据的清空
  */
 @Slf4j
+@Service
 public class RedisClientDetailsService extends JdbcClientDetailsService {
     private RedisTemplate<String, Object> redisTemplate;
 
-    public RedisClientDetailsService(DataSource dataSource) {
+    public RedisClientDetailsService(DataSource dataSource, RedisTemplate<String, Object> redisTemplate) {
         super(dataSource);
+        this.redisTemplate = redisTemplate;
     }
 
     public RedisTemplate<String, Object> getRedisTemplate() {

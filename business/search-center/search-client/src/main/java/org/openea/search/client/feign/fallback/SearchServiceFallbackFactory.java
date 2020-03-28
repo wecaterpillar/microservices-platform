@@ -10,10 +10,8 @@ import org.springframework.stereotype.Component;
 /**
  * searchService降级工场
  *
- * @author zlt
  */
 @Slf4j
-@Component
 public class SearchServiceFallbackFactory implements FallbackFactory<SearchService> {
     @Override
     public SearchService create(Throwable throwable) {

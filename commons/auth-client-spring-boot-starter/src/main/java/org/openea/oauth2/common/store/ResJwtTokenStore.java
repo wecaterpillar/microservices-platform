@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import org.openea.common.constant.SecurityConstants;
 import org.openea.oauth2.common.converter.CustomUserAuthenticationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
@@ -27,9 +28,8 @@ import java.util.stream.Collectors;
 /**
  * 资源服务器 TokenStore 配置类，使用 JWT RSA 非对称加密
  *
- * @author zlt
- * @date 2018/8/20 9:25
  */
+@ConditionalOnProperty(prefix = "openea.oauth2.token.store", name = "type", havingValue = "resJwt")
 public class ResJwtTokenStore {
     @Autowired
     private ResourceServerProperties resource;

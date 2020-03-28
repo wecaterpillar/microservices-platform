@@ -25,8 +25,6 @@ import java.util.Map;
 /**
  * redis 配置类
  *
- * @author zlt
- * @date 2018/11/6 11:02
  */
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching
@@ -50,18 +48,6 @@ public class RedisAutoConfigure {
         redisTemplate.setValueSerializer(redisObjectSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
-    }
-
-    /**
-     * Redis repository redis repository.
-     *
-     * @param redisTemplate the redis template
-     * @return the redis repository
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public RedisRepository redisRepository(RedisTemplate<String, Object> redisTemplate) {
-        return new RedisRepository(redisTemplate);
     }
 
     @Bean(name = "cacheManager")

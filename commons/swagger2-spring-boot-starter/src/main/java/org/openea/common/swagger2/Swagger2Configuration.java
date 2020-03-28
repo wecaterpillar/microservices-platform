@@ -5,12 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
 
-/**
- *
- * @author zlt
- * @date 2018/11/18 9:20
- */
-@Configuration
 @ConditionalOnProperty(name = "openea.swagger.enabled", matchIfMissing = true)
 @Import({
         Swagger2DocumentationConfiguration.class
