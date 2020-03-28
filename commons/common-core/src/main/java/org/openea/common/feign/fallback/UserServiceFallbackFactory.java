@@ -5,7 +5,6 @@ import org.openea.common.model.LoginAppUser;
 import org.openea.common.model.SysUser;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * userService降级工场

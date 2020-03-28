@@ -5,7 +5,6 @@ import org.openea.common.model.PageResult;
 import org.openea.search.client.feign.SearchService;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * searchService降级工场
