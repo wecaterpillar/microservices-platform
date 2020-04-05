@@ -18,6 +18,7 @@ public class FileServerProperties {
      * qiniu：七牛oss
      * aliyun：阿里云oss
      * fastdfs：本地部署的fastDFS
+     * minio: 本地部署minios
      */
     private String type;
 
