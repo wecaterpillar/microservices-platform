@@ -220,7 +220,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Result saveOrUpdateUser(SysUser sysUser) {
+    public Result saveOrUpdateUser(SysUser sysUser) throws Exception {
         if (sysUser.getId() == null) {
             if (StringUtils.isBlank(sysUser.getType())) {
                 sysUser.setType(UserType.BACKEND.name());

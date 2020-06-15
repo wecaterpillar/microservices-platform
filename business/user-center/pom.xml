@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.openea</groupId>
         <artifactId>business</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
     </parent>
     <artifactId>user-center</artifactId>
     <description>用户中心</description>
@@ -83,6 +83,10 @@
             <artifactId>mybatis</artifactId>
             <version>3.5.3</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openea</groupId>
+            <artifactId>auth-client-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

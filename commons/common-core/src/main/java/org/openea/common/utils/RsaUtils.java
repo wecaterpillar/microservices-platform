@@ -1,7 +1,6 @@
 package org.openea.common.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import cn.hutool.core.codec.Base64;
 
 import javax.crypto.Cipher;
 import java.security.KeyFactory;
@@ -33,8 +32,7 @@ public class RsaUtils {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] output = cipher.doFinal(content.getBytes());
-            BASE64Encoder encoder = new BASE64Encoder();
-            return encoder.encode(output);
+            return Base64.encode(output);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -83,8 +81,7 @@ public class RsaUtils {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte [] b = cipher.doFinal(content.getBytes());
-            BASE64Encoder encoder = new BASE64Encoder();
-            return encoder.encode(b);
+            return Base64.encode(b);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -97,7 +94,7 @@ public class RsaUtils {
      */
     public static RSAPublicKey getPublicKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        keyBytes = Base64.decode(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPublicKey)keyFactory.generatePublic(keySpec);
@@ -109,7 +106,7 @@ public class RsaUtils {
      */
     public static PrivateKey getPrivateKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        keyBytes = Base64.decode(key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePrivate(keySpec);

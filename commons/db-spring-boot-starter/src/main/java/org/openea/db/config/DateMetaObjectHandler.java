@@ -1,6 +1,7 @@
 package org.openea.db.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import org.openea.db.properties.MybatisPlusAutoFillProperties;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
@@ -12,23 +13,42 @@ import java.util.Date;
  * @date 2018/12/11
  */
 public class DateMetaObjectHandler implements MetaObjectHandler {
-    private final static String UPDATE_TIME = "updateTime";
-    private final static String CREATE_TIME = "createTime";
+    private MybatisPlusAutoFillProperties autoFillProperties;
+
+    public DateMetaObjectHandler(MybatisPlusAutoFillProperties autoFillProperties) {
+        this.autoFillProperties = autoFillProperties;
+    }
+
+    /**
+     * 是否开启了插入填充
+     */
+    @Override
+    public boolean openInsertFill() {
+        return autoFillProperties.getEnableInsertFill();
+    }
+
+    /**
+     * 是否开启了更新填充
+     */
+    @Override
+    public boolean openUpdateFill() {
+        return autoFillProperties.getEnableUpdateFill();
+    }
 
     /**
      * 插入填充，字段为空自动填充
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        Object createTime = getFieldValByName(CREATE_TIME, metaObject);
-        Object updateTime = getFieldValByName(UPDATE_TIME, metaObject);
+        Object createTime = getFieldValByName(autoFillProperties.getCreateTimeField(), metaObject);
+        Object updateTime = getFieldValByName(autoFillProperties.getUpdateTimeField(), metaObject);
         if (createTime == null || updateTime == null) {
             Date date = new Date();
             if (createTime == null) {
-                setFieldValByName(CREATE_TIME, date, metaObject);
+                setFieldValByName(autoFillProperties.getCreateTimeField(), date, metaObject);
             }
             if (updateTime == null) {
-                setFieldValByName(UPDATE_TIME, date, metaObject);
+                setFieldValByName(autoFillProperties.getUpdateTimeField(), date, metaObject);
             }
         }
     }
@@ -40,7 +60,6 @@ public class DateMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        //mybatis-plus版本2.0.9+
-        setFieldValByName(UPDATE_TIME, new Date(), metaObject);
+        setFieldValByName(autoFillProperties.getUpdateTimeField(), new Date(), metaObject);
     }
 }

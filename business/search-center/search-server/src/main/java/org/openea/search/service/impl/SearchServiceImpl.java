@@ -2,13 +2,14 @@ package org.openea.search.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.PageResult;
+import org.openea.es.utils.SearchBuilder;
 import org.openea.search.model.SearchDto;
 import org.openea.search.service.ISearchService;
-import org.openea.search.util.SearchBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * 通用搜索
@@ -18,8 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SearchServiceImpl implements ISearchService {
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
+    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
+
+    public SearchServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate) {
+        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+    }
 
     /**
      * StringQuery通用搜索
@@ -28,8 +32,8 @@ public class SearchServiceImpl implements ISearchService {
      * @return
      */
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) {
-        return SearchBuilder.builder(elasticsearchTemplate, indexName)
+    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException {
+        return SearchBuilder.builder(elasticsearchRestTemplate, indexName)
                 .setStringQuery(searchDto.getQueryStr())
                 .addSort(searchDto.getSortCol(), SortOrder.DESC)
                 .setIsHighlight(searchDto.getIsHighlighter())

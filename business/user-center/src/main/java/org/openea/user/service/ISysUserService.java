@@ -98,7 +98,7 @@ public interface ISysUserService extends ISuperService<SysUser> {
 	 */
 	List<SysUserExcel> findAllUsers(Map<String, Object> params);
 
-	Result saveOrUpdateUser(SysUser sysUser);
+	Result saveOrUpdateUser(SysUser sysUser) throws Exception;
 
 	/**
 	 * 删除用户

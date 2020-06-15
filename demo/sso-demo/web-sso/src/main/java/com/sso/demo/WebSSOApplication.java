@@ -6,9 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author zlt
  * @date 2020/3/10
- * <p>
- * Blog: https://blog.csdn.net/zlt2000
- * Github: https://github.com/zlt2000
  */
 @SpringBootApplication
 public class WebSSOApplication {

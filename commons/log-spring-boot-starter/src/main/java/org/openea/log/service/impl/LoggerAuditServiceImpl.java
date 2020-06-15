@@ -12,9 +12,6 @@ import java.time.format.DateTimeFormatter;
  *
  * @author zlt
  * @date 2020/2/3
- * <p>
- * Blog: https://blog.csdn.net/zlt2000
- * Github: https://github.com/zlt2000
  */
 @Slf4j
 @ConditionalOnProperty(name = "openea.audit-log.log-type", havingValue = "logger", matchIfMissing = true)

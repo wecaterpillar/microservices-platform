@@ -1,23 +1,27 @@
 package org.openea.common.redis.lock;
 
-import org.openea.common.lock.AbstractDistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
  * redis分布式锁实现
+ *
+ * @author zlt
+ * @date 2018/5/29 14:16
  */
 @Slf4j
-public class RedisDistributedLock extends AbstractDistributedLock {
+@ConditionalOnClass(RedisTemplate.class)
+@Deprecated
+public class RedisDistributedLock {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -42,7 +46,15 @@ public class RedisDistributedLock extends AbstractDistributedLock {
         this.redisTemplate = redisTemplate;
     }
 
-    @Override
+    /**
+     * 获取锁
+     *
+     * @param key 锁的key
+     * @param expire 获取锁超时时间
+     * @param retryTimes 重试次数
+     * @param sleepMillis 获取锁失败的重试间隔
+     * @return 成功/失败
+     */
     public boolean lock(String key, long expire, int retryTimes, long sleepMillis) {
         boolean result = setRedis(key, expire);
         // 如果获取锁失败，按照传入的重试次数进行重试
@@ -76,7 +88,11 @@ public class RedisDistributedLock extends AbstractDistributedLock {
         return false;
     }
 
-    @Override
+    /**
+     * 释放锁
+     * @param key 锁的key
+     * @return 成功/失败
+     */
     public boolean releaseLock(String key) {
         // 释放锁的时候，有可能因为持锁之后方法执行时间大于锁的有效期，此时有可能已经被另外一个线程持有锁，所以不能直接删除
         try {

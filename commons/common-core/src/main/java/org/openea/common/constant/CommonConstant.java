@@ -3,14 +3,12 @@ package org.openea.common.constant;
 /**
  * 全局公共常量
  *
- * @author zlt
- * @date 2018/10/29
  */
 public interface CommonConstant {
     /**
      * 项目版本号(banner使用)
      */
-    String PROJECT_VERSION = "3.4.0";
+    String PROJECT_VERSION = "3.5";
 
     /**
      * token请求头名称

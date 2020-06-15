@@ -12,7 +12,7 @@ import org.openea.common.service.ISuperService;
 * @author zlt
  */
 public interface ISysRoleService extends ISuperService<SysRole> {
-	void saveRole(SysRole sysRole);
+	void saveRole(SysRole sysRole) throws Exception;
 
 	void deleteRole(Long id);
 
@@ -28,7 +28,7 @@ public interface ISysRoleService extends ISuperService<SysRole> {
 	 * @param sysRole
 	 * @return Result
 	 */
-	Result saveOrUpdateRole(SysRole sysRole);
+	Result saveOrUpdateRole(SysRole sysRole) throws Exception;
 
 	/**
 	 * 查询所有角色

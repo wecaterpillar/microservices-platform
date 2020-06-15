@@ -19,9 +19,6 @@ import java.util.Map;
  *
  * @author zlt
  * @date 2019/10/7
- * <p>
- * Blog: https://blog.csdn.net/zlt2000
- * Github: https://github.com/zlt2000
  */
 @Component
 public class RequestStatisticsFilter implements GlobalFilter, Ordered {
@@ -50,6 +47,10 @@ public class RequestStatisticsFilter implements GlobalFilter, Ordered {
                 return "CHROME";
             } else if (browser.contains("FIREFOX")) {
                 return "FIREFOX";
+            } else if (browser.contains("SAFARI")) {
+                return "SAFARI";
+            } else if (browser.contains("EDGE")) {
+                return "EDGE";
             }
         }
         return browser;

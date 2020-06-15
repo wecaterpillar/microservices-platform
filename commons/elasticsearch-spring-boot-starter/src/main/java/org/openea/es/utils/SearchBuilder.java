@@ -1,4 +1,4 @@
-package org.openea.search.util;
+package org.openea.es.utils;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.BooleanUtil;
@@ -9,18 +9,22 @@ import org.openea.common.model.PageResult;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.data.elasticsearch.ElasticsearchException;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +35,7 @@ import java.util.Map;
  * ES查询Builder
  *
  * @author zlt
- * @date 2019/4/23
+ * @date 2020/3/28
  */
 @Setter
 @Getter
@@ -45,10 +49,14 @@ public class SearchBuilder {
      */
     private static final String HIGHLIGHTER_POST_TAGS = "</mark>";
 
-    private SearchRequestBuilder searchBuilder;
+    private SearchRequest searchRequest;
+    private SearchSourceBuilder searchBuilder;
+    private RestHighLevelClient client;
 
-    private SearchBuilder(SearchRequestBuilder searchBuilder) {
+    private SearchBuilder(SearchRequest searchRequest, SearchSourceBuilder searchBuilder, RestHighLevelClient client) {
+        this.searchRequest = searchRequest;
         this.searchBuilder = searchBuilder;
+        this.client = client;
     }
 
     /**
@@ -56,9 +64,35 @@ public class SearchBuilder {
      * @param elasticsearchTemplate
      * @param indexName
      */
-    public static SearchBuilder builder(ElasticsearchTemplate elasticsearchTemplate, String indexName) {
-        SearchRequestBuilder searchBuilder = elasticsearchTemplate.getClient().prepareSearch(indexName);
-        return new SearchBuilder(searchBuilder);
+    public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate, String indexName) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        searchRequest.source(searchSourceBuilder);
+        RestHighLevelClient client = elasticsearchTemplate.getClient();
+        return new SearchBuilder(searchRequest, searchSourceBuilder, client);
+    }
+
+    /**
+     * 生成SearchBuilder实例
+     * @param elasticsearchTemplate
+     */
+    public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        SearchRequest searchRequest = new SearchRequest();
+        searchRequest.source(searchSourceBuilder);
+        RestHighLevelClient client = elasticsearchTemplate.getClient();
+        return new SearchBuilder(searchRequest, searchSourceBuilder, client);
+    }
+
+    /**
+     * 设置索引名
+     * @param indices 索引名数组
+     */
+    public SearchBuilder setIndices(String... indices) {
+        if (ArrayUtil.isNotEmpty(indices)) {
+            searchRequest.indices(indices);
+        }
+        return this;
     }
 
     /**
@@ -72,7 +106,7 @@ public class SearchBuilder {
         } else {
             queryBuilder = QueryBuilders.matchAllQuery();
         }
-        searchBuilder.setQuery(queryBuilder);
+        searchBuilder.query(queryBuilder);
         return this;
     }
 
@@ -83,8 +117,8 @@ public class SearchBuilder {
      */
     public SearchBuilder setPage(Integer page, Integer limit) {
         if (page != null && limit != null) {
-            searchBuilder.setFrom((page - 1) * limit)
-                    .setSize(limit);
+            searchBuilder.from((page - 1) * limit)
+                    .size(limit);
         }
         return this;
     }
@@ -96,7 +130,7 @@ public class SearchBuilder {
      */
     public SearchBuilder addSort(String field, SortOrder order) {
         if (StrUtil.isNotEmpty(field) && order != null) {
-            searchBuilder.addSort(field, order);
+            searchBuilder.sort(field, order);
         }
         return this;
     }
@@ -135,7 +169,7 @@ public class SearchBuilder {
      */
     public SearchBuilder setRouting(String... routing) {
         if (ArrayUtil.isNotEmpty(routing)) {
-            searchBuilder.setRouting(routing);
+            searchRequest.routing(routing);
         }
         return this;
     }
@@ -143,21 +177,21 @@ public class SearchBuilder {
     /**
      * 返回结果 SearchResponse
      */
-    public SearchResponse get() {
-        return searchBuilder.execute().actionGet();
+    public SearchResponse get() throws IOException {
+        return client.search(searchRequest, RequestOptions.DEFAULT);
     }
 
     /**
      * 返回列表结果 List<JSONObject>
      */
-    public List<JSONObject> getList() {
+    public List<JSONObject> getList() throws IOException {
         return getList(this.get().getHits());
     }
 
     /**
      * 返回分页结果 PageResult<JSONObject>
      */
-    public PageResult<JSONObject> getPage() {
+    public PageResult<JSONObject> getPage() throws IOException {
         return this.getPage(null, null);
     }
 
@@ -166,7 +200,7 @@ public class SearchBuilder {
      * @param page 当前页数
      * @param limit 每页显示
      */
-    public PageResult<JSONObject> getPage(Integer page, Integer limit) {
+    public PageResult<JSONObject> getPage(Integer page, Integer limit) throws IOException {
         this.setPage(page, limit);
         SearchResponse response = this.get();
         SearchHits searchHits = response.getHits();

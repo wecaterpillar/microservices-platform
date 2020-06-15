@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+
 /**
  * 通用搜索
  *
@@ -22,8 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 @Api(tags = "搜索模块api")
 @RequestMapping("/search")
 public class SearchController {
-    @Autowired
-    private ISearchService searchService;
+    private final ISearchService searchService;
+
+    public SearchController(ISearchService searchService) {
+        this.searchService = searchService;
+    }
 
     /**
      * 查询文档列表
@@ -31,7 +36,7 @@ public class SearchController {
      * @param searchDto 搜索Dto
      */
     @PostMapping("/{indexName}")
-    public PageResult<JSONObject> strQuery(@PathVariable String indexName, @RequestBody(required = false) SearchDto searchDto) {
+    public PageResult<JSONObject> strQuery(@PathVariable String indexName, @RequestBody(required = false) SearchDto searchDto) throws IOException {
         if (searchDto == null) {
             searchDto = new SearchDto();
         }

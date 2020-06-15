@@ -18,9 +18,6 @@ import java.io.IOException;
  *
  * @author zlt
  * @date 2020/3/10
- * <p>
- * Blog: https://blog.csdn.net/zlt2000
- * Github: https://github.com/zlt2000
  */
 @Component
 public class SsoLogoutSuccessHandler implements LogoutSuccessHandler {

@@ -2,4 +2,3 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.openea.common.redis.RedisAutoConfigure,\
 org.openea.common.redis.lock.RedisDistributedLock,\
 org.openea.common.redis.template.RedisRepository
-

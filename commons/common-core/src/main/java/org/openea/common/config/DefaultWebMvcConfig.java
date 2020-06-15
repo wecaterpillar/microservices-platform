@@ -6,8 +6,7 @@ import org.openea.common.resolver.TokenArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
  * @author zlt
  * @date 2019/8/5
  */
-public class DefaultWebMvcConfig extends WebMvcConfigurationSupport {
+public class DefaultWebMvcConfig implements WebMvcConfigurer {
 	@Lazy
 	@Autowired
 	private UserService userService;
@@ -33,18 +32,5 @@ public class DefaultWebMvcConfig extends WebMvcConfigurationSupport {
 		argumentResolvers.add(new TokenArgumentResolver(userService));
 		//注入应用信息
 		argumentResolvers.add(new ClientArgumentResolver());
-	}
-
-	/**
-	 * 设置资源文件目录
-	 * @param registry
-	 */
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/**")
-				.addResourceLocations("classpath:/resources/")
-				.addResourceLocations("classpath:/static/")
-				.addResourceLocations("classpath:/public/");
-		super.addResourceHandlers(registry);
 	}
 }

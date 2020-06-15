@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.openea.db.config.TenantAutoConfigure
+org.openea.db.config.TenantAutoConfigure,\
+org.openea.db.config.MybatisPlusAutoConfigure

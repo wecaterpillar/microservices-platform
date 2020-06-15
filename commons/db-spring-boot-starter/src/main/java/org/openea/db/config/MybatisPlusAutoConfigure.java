@@ -1,23 +1,27 @@
 package org.openea.db.config;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-
 import org.openea.common.properties.TenantProperties;
+import org.openea.db.properties.MybatisPlusAutoFillProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 
 /**
- * mybatis-plus配置
+ * mybatis-plus自动配置
+ *
  * @author zlt
- * @date 2018/12/13
+ * @date 2020/4/5
  */
-@Import(DateMetaObjectHandler.class)
-public class DefaultMybatisPlusConfig {
+@EnableConfigurationProperties(MybatisPlusAutoFillProperties.class)
+public class MybatisPlusAutoConfigure {
     @Autowired
     private TenantHandler tenantHandler;
 
@@ -26,6 +30,9 @@ public class DefaultMybatisPlusConfig {
 
     @Autowired
     private TenantProperties tenantProperties;
+
+    @Autowired
+    private MybatisPlusAutoFillProperties autoFillProperties;
 
     /**
      * 分页插件，自动识别数据库类型
@@ -42,5 +49,12 @@ public class DefaultMybatisPlusConfig {
             paginationInterceptor.setSqlParserFilter(sqlParserFilter);
         }
         return paginationInterceptor;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix = "openea.mybatis-plus.auto-fill", name = "enabled", havingValue = "true", matchIfMissing = true)
+    public MetaObjectHandler metaObjectHandler() {
+        return new DateMetaObjectHandler(autoFillProperties);
     }
 }

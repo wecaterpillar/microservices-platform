@@ -3,19 +3,11 @@ package org.openea.common.utils;
 import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
-import java.nio.charset.Charset;
 
 /**
  * @author zlt
@@ -35,7 +27,7 @@ public class ResponseUtil {
      * @throws IOException
      */
     public static void responseWriter(ObjectMapper objectMapper, HttpServletResponse response, String msg, int httpStatus) throws IOException {
-        Result result = Result.succeedWith(null, httpStatus, msg);
+        Result result = Result.of(null, httpStatus, msg);
         responseWrite(objectMapper, response, result);
     }
 
@@ -70,22 +62,5 @@ public class ResponseUtil {
             writer.write(objectMapper.writeValueAsString(result));
             writer.flush();
         }
-    }
-
-    /**
-     * webflux的response返回json对象
-     */
-    public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg) {
-        Result result = Result.succeedWith(null, httpStatus, msg);
-        ServerHttpResponse response = exchange.getResponse();
-        response.getHeaders().setAccessControlAllowCredentials(true);
-        response.getHeaders().setAccessControlAllowOrigin("*");
-        response.setStatusCode(HttpStatus.valueOf(result.getResp_code()));
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
-        DataBufferFactory dataBufferFactory = response.bufferFactory();
-        DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
-        return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
-            DataBufferUtils.release(buffer);
-        });
     }
 }

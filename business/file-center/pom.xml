@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.openea</groupId>
         <artifactId>business</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
     </parent>
     <artifactId>file-center</artifactId>
     <description>文件中心</description>
@@ -66,6 +66,11 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+
         <!-- 阿里云oss -->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
@@ -80,11 +85,6 @@
         <dependency>
             <groupId>com.github.tobato</groupId>
             <artifactId>fastdfs-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
         </dependency>
     </dependencies>
 
@@ -116,7 +116,9 @@
                     <env>
                         <JAVA_OPTS>${docker.java.opts}</JAVA_OPTS>
                     </env>
-                    <entryPoint>["sh","-c","java $JAVA_OPTS ${docker.java.security.egd} -jar /${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["sh","-c","java $JAVA_OPTS ${docker.java.security.egd} -jar
+                        /${project.build.finalName}.jar"]
+                    </entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

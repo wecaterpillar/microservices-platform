@@ -45,7 +45,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveRole(SysRole sysRole) {
+    public void saveRole(SysRole sysRole) throws Exception {
         String roleCode = sysRole.getCode();
         super.saveIdempotency(sysRole, lock
                 , LOCK_KEY_ROLECODE+roleCode, new QueryWrapper<SysRole>().eq("code", roleCode), "角色code已存在");
@@ -70,7 +70,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
 
     @Override
     @Transactional
-    public Result saveOrUpdateRole(SysRole sysRole) {
+    public Result saveOrUpdateRole(SysRole sysRole) throws Exception {
         if (sysRole.getId() == null) {
             this.saveRole(sysRole);
         } else {

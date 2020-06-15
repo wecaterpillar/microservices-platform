@@ -3,4 +3,5 @@ org.openea.common.config.BannerInitializer
 
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.openea.common.feign.fallback.UserServiceFallbackFactory
+org.openea.common.feign.fallback.UserServiceFallbackFactory,\
+org.openea.common.lock.LockAspect

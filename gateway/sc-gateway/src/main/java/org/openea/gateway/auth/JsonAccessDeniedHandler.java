@@ -1,6 +1,7 @@
 package org.openea.gateway.auth;
 
 import org.openea.common.utils.ResponseUtil;
+import org.openea.common.utils.WebfluxResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,6 +22,6 @@ import reactor.core.publisher.Mono;
 public class JsonAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
-        return ResponseUtil.responseWriter(exchange, HttpStatus.FORBIDDEN.value(), e.getMessage());
+        return WebfluxResponseUtil.responseFailed(exchange, HttpStatus.FORBIDDEN.value(), e.getMessage());
     }
 }

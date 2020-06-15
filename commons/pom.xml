@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.openea</groupId>
         <artifactId>ea-msp</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
     </parent>
     <artifactId>commons</artifactId>
     <description>通用组件</description>
@@ -20,5 +20,6 @@
         <module>auth-client-spring-boot-starter</module>
         <module>sentinel-spring-boot-starter</module>
         <module>common-core</module>
+        <module>elasticsearch-spring-boot-starter</module>
     </modules>
 </project>

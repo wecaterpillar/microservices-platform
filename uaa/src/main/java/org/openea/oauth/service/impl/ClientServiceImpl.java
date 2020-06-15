@@ -39,7 +39,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     private DistributedLock lock;
 
     @Override
-    public Result saveClient(Client client) {
+    public Result saveClient(Client client) throws Exception {
         client.setClientSecret(passwordEncoder.encode(client.getClientSecretStr()));
         String clientId = client.getClientId();
         super.saveOrUpdateIdempotency(client, lock
@@ -50,7 +50,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     }
 
     @Override
-    public PageResult<Client> listClent(Map<String, Object> params, boolean isPage) {
+    public PageResult<Client> listClient(Map<String, Object> params, boolean isPage) {
         Page<Client> page;
         if (isPage) {
             page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));

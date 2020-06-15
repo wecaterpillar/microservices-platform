@@ -23,9 +23,6 @@ import java.util.concurrent.Executor;
  *
  * @author zlt
  * @date 2019/10/7
- * <p>
- * Blog: https://blog.csdn.net/zlt2000
- * Github: https://github.com/zlt2000
  */
 @Slf4j
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {

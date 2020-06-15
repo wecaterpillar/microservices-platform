@@ -1,7 +1,10 @@
 package org.openea.common.ribbon.config;
 
-import org.openea.common.ribbon.rule.CustomIsolationRule;
+import com.alibaba.cloud.nacos.ribbon.NacosServer;
+import org.openea.common.ribbon.rule.VersionIsolationRule;
 import com.netflix.loadbalancer.IRule;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -10,7 +13,9 @@ import org.springframework.context.annotation.Bean;
  */
 public class RuleConfigure {
     @Bean
-    public IRule isolationRule() {
-        return new CustomIsolationRule();
+    @ConditionalOnClass(NacosServer.class)
+    @ConditionalOnMissingBean
+    public IRule versionIsolationRule() {
+        return new VersionIsolationRule();
     }
 }
