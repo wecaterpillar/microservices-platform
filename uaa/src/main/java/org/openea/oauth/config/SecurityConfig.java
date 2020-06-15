@@ -1,6 +1,7 @@
 package org.openea.oauth.config;
 
 import org.openea.common.constant.SecurityConstants;
+import org.openea.oauth.filter.LoginProcessSetTenantFilter;
 import org.openea.oauth.handler.OauthLogoutSuccessHandler;
 import org.openea.oauth.mobile.MobileAuthenticationSecurityConfig;
 import org.openea.oauth.openid.OpenIdAuthenticationSecurityConfig;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import javax.annotation.Resource;
@@ -94,7 +96,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
 				.apply(mobileAuthenticationSecurityConfig)
 					.and()
-                .csrf().disable()
+				.addFilterBefore(new LoginProcessSetTenantFilter(), UsernamePasswordAuthenticationFilter.class)
+				.csrf().disable()
 				// 解决不允许显示在iframe的问题
 				.headers().frameOptions().disable().cacheControl();
 
