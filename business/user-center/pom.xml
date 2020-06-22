@@ -84,10 +84,6 @@
             <version>3.5.3</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.openea</groupId>
-            <artifactId>auth-client-spring-boot-starter</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
