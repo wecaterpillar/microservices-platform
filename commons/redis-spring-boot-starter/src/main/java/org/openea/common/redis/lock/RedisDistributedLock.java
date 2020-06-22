@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis分布式锁实现
  *
- * @author zlt
- * @date 2018/5/29 14:16
  */
 @Slf4j
 @ConditionalOnClass(RedisTemplate.class)

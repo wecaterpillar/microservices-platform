@@ -79,12 +79,6 @@ spring:
             - Path=/api-bpm/**
           filters:
             - StripPrefix=1
-        - id: org
-          uri: lb://org-service
-          predicates:
-            - Path=/api-org/**
-          filters:
-            - StripPrefix=1
 #    sentinel:
 #      datasource.ds1.nacos:
 #        server-addr: ${spring.cloud.nacos.server-addr}
@@ -96,7 +90,7 @@ spring:
 
 openea:
   swagger-agg:
-    generate-routes: user,file,bpm,org
+    generate-routes: user,file,bpm
   oauth2:
     token:
       store:

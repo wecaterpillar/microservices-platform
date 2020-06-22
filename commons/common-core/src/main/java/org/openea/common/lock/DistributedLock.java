@@ -5,8 +5,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * 分布式锁顶级接口
  *
- * @author zlt
- * @date 2018/5/29 14:12
  */
 public interface DistributedLock {
     /**

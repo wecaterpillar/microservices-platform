@@ -20,7 +20,7 @@ public class BannerInitializer implements ApplicationContextInitializer<Configur
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         if (!(applicationContext instanceof AnnotationConfigApplicationContext)) {
-            LogoBanner logoBanner = new LogoBanner(BannerInitializer.class, "/mspmp/logo.txt", "Welcome to OpenEa MSP", 5, 6, new Color[5], true);
+            LogoBanner logoBanner = new LogoBanner(BannerInitializer.class, "/mspmp/logo.txt", "Welcome to OpenEA MSP", 5, 6, new Color[5], true);
             CustomBanner.show(logoBanner, new Description(BannerConstant.VERSION + ":", CommonConstant.PROJECT_VERSION, 0, 1)
                     , new Description("EA MSP:", "https://github.com/wecaterpillar/openea-msp", 0, 1)
             );

@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
  * redisson分布式锁实现，基本锁功能的抽象实现
  * 本接口能满足绝大部分的需求，高级的锁功能，请自行扩展或直接使用原生api
  *
- * @author zlt
- * @date 2020/5/5
  */
 @ConditionalOnClass(RedissonClient.class)
 @ConditionalOnProperty(prefix = "openea.lock", name = "lockerType", havingValue = "REDIS", matchIfMissing = true)
