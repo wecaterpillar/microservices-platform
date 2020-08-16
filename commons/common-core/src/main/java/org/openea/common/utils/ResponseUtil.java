@@ -55,7 +55,7 @@ public class ResponseUtil {
     }
 
     private static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, Result result) throws IOException {
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         try (
                 Writer writer = response.getWriter()
         ) {

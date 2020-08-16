@@ -13,8 +13,6 @@ import java.util.List;
 /**
  * 默认SpringMVC拦截器
  *
- * @author zlt
- * @date 2019/8/5
  */
 public class DefaultWebMvcConfig implements WebMvcConfigurer {
 	@Lazy

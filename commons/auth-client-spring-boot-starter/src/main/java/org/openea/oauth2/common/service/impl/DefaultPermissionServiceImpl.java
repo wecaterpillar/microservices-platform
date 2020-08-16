@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
 
 /**
  * 请求权限判断service
- *
- * @author zlt
- * @date 2018/10/28
  */
 @Slf4j
 public abstract class DefaultPermissionServiceImpl {

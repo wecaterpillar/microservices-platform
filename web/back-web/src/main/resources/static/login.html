@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <input name="grant_type" type="hidden" value="password_code"/>
                     <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>登 录</button>
                 </div>
             </form>
@@ -55,7 +56,7 @@
 
 
     <div class="login-footer">
-        <p>© 2020 <a href="javascript:;" target="_blank">OpenEA MSP</a></p>
+        <p>© 2018 <a href="javascript:;" target="_blank">zlt版权所有</a></p>
     </div>
 </div>
 <script type="text/javascript" src="module/apiUrl.js"></script>
@@ -83,7 +84,7 @@
         form.on('submit(login-submit)', function (obj) {
             layer.load(2);
             $.ajax({
-                url: config.base_server + 'api-uaa/oauth/user/token',
+                url: config.base_server + 'api-uaa/oauth/token',
                 xhrFields: {
                     withCredentials: true
                 },

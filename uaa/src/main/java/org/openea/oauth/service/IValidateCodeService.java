@@ -2,12 +2,6 @@ package org.openea.oauth.service;
 
 import org.openea.common.model.Result;
 
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * @author zlt
- * @date 2018/12/10
- */
 public interface IValidateCodeService {
     /**
      * 保存图形验证码
@@ -33,5 +27,5 @@ public interface IValidateCodeService {
     /**
      * 验证验证码
      */
-    void validate(HttpServletRequest request);
+    void validate(String deviceId, String validCode);
 }

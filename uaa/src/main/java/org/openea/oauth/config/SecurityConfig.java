@@ -4,11 +4,11 @@ import org.openea.common.constant.SecurityConstants;
 import org.openea.common.properties.TenantProperties;
 import org.openea.oauth.filter.LoginProcessSetTenantFilter;
 import org.openea.oauth.handler.OauthLogoutSuccessHandler;
+import org.openea.oauth.tenant.TenantAuthenticationSecurityConfig;
+import org.openea.oauth.tenant.TenantUsernamePasswordAuthenticationFilter;
 import org.openea.oauth.mobile.MobileAuthenticationSecurityConfig;
 import org.openea.oauth.openid.OpenIdAuthenticationSecurityConfig;
 import org.openea.common.config.DefaultPasswordConfig;
-import org.openea.oauth.tenant.TenantAuthenticationSecurityConfig;
-import org.openea.oauth.tenant.TenantUsernamePasswordAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import javax.annotation.Resource;
@@ -32,8 +31,6 @@ import javax.annotation.Resource;
 /**
  * spring security配置
  * 在WebSecurityConfigurerAdapter不拦截oauth要开放的资源
- *
- * @author zlt
  */
 @Configuration
 @Import(DefaultPasswordConfig.class)
@@ -55,9 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private LogoutHandler oauthLogoutHandler;
 
 	@Autowired
-	private ValidateCodeSecurityConfig validateCodeSecurityConfig;
-
-	@Autowired
 	private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
 
 	@Autowired
@@ -77,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @return 认证管理对象
 	 */
 	@Bean
-    @Override
+	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
@@ -95,24 +89,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-					.anyRequest()
-					//授权服务器关闭basic认证
-                    .permitAll()
-                    .and()
+				.anyRequest()
+				//授权服务器关闭basic认证
+				.permitAll()
+				.and()
 				.logout()
-					.logoutUrl(SecurityConstants.LOGOUT_URL)
-					.logoutSuccessHandler(new OauthLogoutSuccessHandler())
-					.addLogoutHandler(oauthLogoutHandler)
-					.clearAuthentication(true)
-					.and()
-                .apply(validateCodeSecurityConfig)
-                    .and()
-                .apply(openIdAuthenticationSecurityConfig)
-                    .and()
+				.logoutUrl(SecurityConstants.LOGOUT_URL)
+				.logoutSuccessHandler(new OauthLogoutSuccessHandler())
+				.addLogoutHandler(oauthLogoutHandler)
+				.clearAuthentication(true)
+				.and()
+				.apply(openIdAuthenticationSecurityConfig)
+				.and()
 				.apply(mobileAuthenticationSecurityConfig)
-					.and()
+				.and()
 				.addFilterBefore(new LoginProcessSetTenantFilter(), UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable()
+				.csrf().disable()
 				// 解决不允许显示在iframe的问题
 				.headers().frameOptions().disable().cacheControl();
 
@@ -120,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			//解决不同租户单点登录时角色没变化
 			http.formLogin()
 					.loginPage(SecurityConstants.LOGIN_PAGE)
-						.and()
+					.and()
 					.addFilterAt(tenantAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
 					.apply(tenantAuthenticationSecurityConfig);
 		} else {

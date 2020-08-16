@@ -31,14 +31,6 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         this.redisTemplate = redisTemplate;
     }
 
-    public RedisTemplate<String, Object> getRedisTemplate() {
-        return redisTemplate;
-    }
-
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
     @Override
     public ClientDetails loadClientByClientId(String clientId) {
         // 先从redis获取

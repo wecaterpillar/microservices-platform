@@ -5,6 +5,7 @@ import org.openea.oauth2.common.converter.CustomUserAuthenticationConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
@@ -21,8 +22,10 @@ import java.util.Map;
 /**
  * 认证服务器使用 JWT RSA 非对称加密令牌
  *
+ * @author zlt
+ * @date 2018/7/24 16:21
  */
-@ConditionalOnProperty(prefix = "openea.oauth2.token.store", name = "type", havingValue = "authJwt")
+@ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "authJwt")
 public class AuthJwtTokenStore {
 
     @Bean("keyProp")
@@ -39,6 +42,7 @@ public class AuthJwtTokenStore {
     }
 
     @Bean
+    @Order(2)
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = new KeyStoreKeyFactory
@@ -57,6 +61,7 @@ public class AuthJwtTokenStore {
      * @return TokenEnhancer
      */
     @Bean
+    @Order(1)
     public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(1);

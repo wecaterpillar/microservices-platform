@@ -18,10 +18,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author zlt
- * @date 2018/12/10
- */
 @Slf4j
 @Service
 public class ValidateCodeServiceImpl implements IValidateCodeService {
@@ -95,19 +91,12 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      * 验证验证码
      */
     @Override
-    public void validate(HttpServletRequest request) {
-        String deviceId = request.getParameter("deviceId");
+    public void validate(String deviceId, String validCode) {
         if (StringUtils.isBlank(deviceId)) {
             throw new ValidateCodeException("请在请求参数中携带deviceId参数");
         }
         String code = this.getCode(deviceId);
-        String codeInRequest;
-        try {
-            codeInRequest = ServletRequestUtils.getStringParameter(request, "validCode");
-        } catch (ServletRequestBindingException e) {
-            throw new ValidateCodeException("获取验证码的值失败");
-        }
-        if (StringUtils.isBlank(codeInRequest)) {
+        if (StringUtils.isBlank(validCode)) {
             throw new ValidateCodeException("请填写验证码");
         }
 
@@ -115,7 +104,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
             throw new ValidateCodeException("验证码不存在或已过期");
         }
 
-        if (!StringUtils.equals(code, codeInRequest.toLowerCase())) {
+        if (!StringUtils.equals(code, validCode.toLowerCase())) {
             throw new ValidateCodeException("验证码不正确");
         }
 
