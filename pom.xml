@@ -414,19 +414,18 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>opentech-share</id>
+            <name>share</name>
+            <url>https://openmall-maven.pkg.coding.net/repository/opentech/share/</url>
+        </repository>
     </repositories>
     <distributionManagement>
         <repository>
-            <id>releases</id>
-            <name>releases Repository</name>
-            <url>http://192.168.28.138:8081/repository/maven-releases/</url>
+            <id>opentech-share</id>
+            <name>share</name>
+            <url>https://openmall-maven.pkg.coding.net/repository/opentech/share/</url>
         </repository>
-
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://192.168.28.138:8081/repository/maven-snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
     </distributionManagement>
 
     <modules>
