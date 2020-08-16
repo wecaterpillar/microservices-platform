@@ -22,10 +22,8 @@ import java.util.Map;
 /**
  * 认证服务器使用 JWT RSA 非对称加密令牌
  *
- * @author zlt
- * @date 2018/7/24 16:21
  */
-@ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "authJwt")
+@ConditionalOnProperty(prefix = "openea.oauth2.token.store", name = "type", havingValue = "authJwt")
 public class AuthJwtTokenStore {
 
     @Bean("keyProp")
