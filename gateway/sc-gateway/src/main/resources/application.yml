@@ -73,12 +73,6 @@ spring:
             - Path=/api-search/**
           filters:
             - StripPrefix=1
-        - id: bpm
-          uri: lb://bpm-service
-          predicates:
-            - Path=/api-bpm/**
-          filters:
-            - StripPrefix=1
 #    sentinel:
 #      datasource.ds1.nacos:
 #        server-addr: ${spring.cloud.nacos.server-addr}
@@ -88,9 +82,9 @@ spring:
 #      filter:
 #        enabled: true
 
-openea:
+ea:
   swagger-agg:
-    generate-routes: user,file,bpm
+    generate-routes: user,file
   oauth2:
     token:
       store:
@@ -104,9 +98,9 @@ openea:
         /api-uaa/css/**,
         /api-uaa/images/**,
         /api-uaa/js/**,
-        /api-user/users-anon/**,
         /login.html,
-        /user/login
+        /user/login,
+        /api-uaa/tokens/key
     auth:
       urlPermission:
         #是否开启url级别权限

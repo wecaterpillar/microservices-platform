@@ -17,9 +17,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @Author zlt
- */
+
 @Slf4j
 @Service
 public class SysGeneratorServiceImpl extends ServiceImpl implements SysGeneratorService {

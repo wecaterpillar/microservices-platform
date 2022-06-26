@@ -10,9 +10,7 @@ import org.springframework.messaging.Message;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author zlt
- */
+
 @RestController
 public class OrderController {
     private final Source source;

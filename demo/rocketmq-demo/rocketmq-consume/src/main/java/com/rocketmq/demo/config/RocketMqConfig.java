@@ -6,9 +6,7 @@ import com.rocketmq.demo.config.RocketMqConfig.MySink;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.messaging.SubscribableChannel;
 
-/**
- * @author zlt
- */
+
 @EnableBinding({MySink.class})
 public class RocketMqConfig {
     public interface MySink {

@@ -7,8 +7,6 @@ import org.openea.common.lock.DistributedLock;
 /**
  * service接口父类
  *
- * @author zlt
- * @date 2019/1/10
  */
 public interface ISuperService<T> extends IService<T> {
     /**

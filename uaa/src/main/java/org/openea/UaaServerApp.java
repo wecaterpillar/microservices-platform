@@ -1,22 +1,21 @@
 package org.openea;
 
-import org.openea.common.ribbon.annotation.EnableFeignInterceptor;
+import org.openea.common.lb.annotation.EnableFeignInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-/**
-* @author zlt
-*/
+
 @EnableFeignClients
 @EnableFeignInterceptor
 @EnableDiscoveryClient
-@EnableRedisHttpSession
+//@EnableRedisHttpSession
 @SpringBootApplication
 public class UaaServerApp {
 	public static void main(String[] args) {
-		SpringApplication.run(UaaServerApp.class, args);
+		SpringApplication application = new SpringApplication(UaaServerApp.class);
+		application.setEnvironmentPrefix("ea-uaa");
+		application.run(args);
 	}
 }

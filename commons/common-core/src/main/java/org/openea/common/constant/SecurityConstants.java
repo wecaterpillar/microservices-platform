@@ -3,7 +3,6 @@ package org.openea.common.constant;
 /**
  * Security 权限常量
  *
- * @author zlt
  */
 public interface SecurityConstants {
     /**
@@ -30,6 +29,11 @@ public interface SecurityConstants {
      * 租户信息头(应用)
      */
     String TENANT_HEADER = "x-tenant-header";
+
+    /**
+     * 账号类型信息头
+     */
+    String ACCOUNT_TYPE_HEADER = "x-account-type-header";
 
     /**
      * 基础角色
@@ -111,9 +115,9 @@ public interface SecurityConstants {
      */
     String DEFAULT_IMAGE_FONT_SIZE = "30";
     /**
-     * zlt公共前缀
+     * EA公共前缀
      */
-    String ZLT_PREFIX = "openea:";
+    String EA_PREFIX = "ea:";
     /**
      * 缓存client的redis key，这里是hash结构存储
      */
@@ -147,6 +151,10 @@ public interface SecurityConstants {
      */
     String REDIS_TOKEN_AUTH = "auth:";
     /**
+     * 值同access 过期时间+60
+     */
+    String ACCESS_BAK = "access_bak:";
+    /**
      * redis中应用对应的token集合的key
      */
     String REDIS_CLIENT_ID_TO_ACCESS = "client_id_to_access:";
@@ -158,4 +166,23 @@ public interface SecurityConstants {
      * rsa公钥
      */
     String RSA_PUBLIC_KEY = "pubkey.txt";
+    /**
+     * 获取id_token的response_type
+     */
+    String ID_TOKEN = "id_token";
+
+    /**
+     * 令牌颁发者
+     */
+    String ISS = "http://openea.org";
+
+    /**
+     * 默认账号类型
+     */
+    String DEF_ACCOUNT_TYPE = "admin";
+
+    /**
+     * 账号类型参数名
+     */
+    String ACCOUNT_TYPE_PARAM_NAME = "account_type";
 }

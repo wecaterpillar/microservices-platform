@@ -9,8 +9,6 @@ import lombok.experimental.Accessors;
 /**
  * 库存
  *
- * @author zlt
- * @date 2019/9/14
  */
 @Data
 @Accessors(chain = true)

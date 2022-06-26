@@ -18,8 +18,6 @@ import java.util.Set;
 /**
  * 跨域配置
  *
- * @author zlt
- * @date 2019/10/5
  */
 @Component
 @EnableConfigurationProperties(SwaggerAggProperties.class)

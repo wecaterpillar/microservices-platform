@@ -1,6 +1,5 @@
 package org.openea.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
@@ -9,10 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 
-/**
- * @author zlt
- * @date 2018/12/20
- */
+
 public class ResponseUtil {
     private ResponseUtil() {
         throw new IllegalStateException("Utility class");

@@ -1,8 +1,6 @@
 package org.openea.generator.model;
 
-/**
- * @Author: zlt
- */
+
 public class ColumnEntity {
     /**
      * 列名

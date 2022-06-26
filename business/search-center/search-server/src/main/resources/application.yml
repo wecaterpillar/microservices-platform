@@ -1,11 +1,11 @@
 spring:
   elasticsearch:
     rest:
-      uris: ${openea.elasticsearch.uris}
-      username: ${openea.elasticsearch.username}
-      password: ${openea.elasticsearch.password}
+      uris: ${ea.elasticsearch.uris}
+      username: ${ea.elasticsearch.username}
+      password: ${ea.elasticsearch.password}
 
-openea:
+ea:
   indices:
     show: sys-log-*,mysql-slowlog-*,sys_user,point-log-*,audit-log-*
   swagger:

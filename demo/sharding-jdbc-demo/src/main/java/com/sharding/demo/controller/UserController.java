@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @author zlt
- */
+
 @RestController
 public class UserController {
     private final IUserService userService;

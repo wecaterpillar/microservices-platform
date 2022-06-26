@@ -14,8 +14,6 @@ import javax.sql.DataSource;
 import java.util.List;
 
 /**
- * @author zlt
- * @version 创建时间：2017年11月12日 上午22:57:51
  * 类说明
  * 将oauth_client_details表数据缓存到redis，这里做个缓存优化
  * layui模块中有对oauth_client_details的crud， 注意同步redis的数据
@@ -88,7 +86,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
      * @param clientId
      */
     private void removeRedisCache(String clientId) {
-        redisTemplate.opsForValue().get(clientRedisKey(clientId));
+        redisTemplate.delete(clientRedisKey(clientId));
     }
 
     /**
@@ -101,7 +99,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
             return;
         }
 
-        list.parallelStream().forEach(client -> redisTemplate.opsForValue().set(clientRedisKey(client.getClientId()), client));
+        list.forEach(client -> redisTemplate.opsForValue().set(clientRedisKey(client.getClientId()), client));
     }
 
     private String clientRedisKey(String clientId) {

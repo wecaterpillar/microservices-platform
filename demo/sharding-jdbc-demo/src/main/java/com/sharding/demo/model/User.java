@@ -5,9 +5,7 @@ import org.openea.common.model.SuperEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * @author zlt
- */
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("user")

@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * Rocketmq事务 demo
  *
- * @author zlt
  */
 @EnableTransactionManagement
 @SpringBootApplication

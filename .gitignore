@@ -2,7 +2,6 @@
 logs/
 target/
 .txlcn/
-zlt-*/**
 
 *.iml
 *.versionsBackup

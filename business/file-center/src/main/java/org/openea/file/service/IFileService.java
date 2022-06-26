@@ -1,11 +1,13 @@
 package org.openea.file.service;
 
+import java.io.OutputStream;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.openea.common.model.PageResult;
-import org.openea.file.model.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.openea.file.model.FileInfo;
 
 /**
  * 文件service
@@ -18,4 +20,6 @@ public interface IFileService extends IService<FileInfo> {
 	PageResult<FileInfo> findList(Map<String, Object> params);
 
 	void delete(String id);
+
+	void out(String id, OutputStream os);
 }

@@ -9,7 +9,10 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
+/**
+ * password添加图像验证码授权模式
+ *
+ */
 public class PwdImgCodeGranter extends ResourceOwnerPasswordTokenGranter {
     private static final String GRANT_TYPE = "password_code";
 

@@ -1,13 +1,13 @@
 package org.openea.search.client.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.PageResult;
 import org.openea.search.client.feign.AggregationService;
 import org.openea.search.client.feign.SearchService;
 import org.openea.search.client.service.IQueryService;
 import org.openea.search.model.LogicDelDto;
 import org.openea.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -15,8 +15,6 @@ import java.util.Map;
 /**
  * 搜索客户端Service
  *
- * @author zlt
- * @date 2019/4/24
  */
 public class QueryServiceImpl implements IQueryService {
     @Resource
@@ -26,12 +24,12 @@ public class QueryServiceImpl implements IQueryService {
     private AggregationService aggregationService;
 
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) {
         return strQuery(indexName, searchDto, null);
     }
 
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) {
         setLogicDelQueryStr(searchDto, logicDelDto);
         return searchService.strQuery(indexName, searchDto);
     }

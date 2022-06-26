@@ -1,6 +1,7 @@
 package org.openea.oauth.service.impl;
 
-import org.springframework.data.redis.core.RedisTemplate;
+import org.openea.common.redis.template.RedisRepository;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.stereotype.Service;
@@ -8,24 +9,17 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author zlt
  * JdbcAuthorizationCodeServices替换
+ *
  */
 @Service
 public class RedisAuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
+    private final RedisRepository redisRepository;
+    private final RedisSerializer<Object> valueSerializer;
 
-    private RedisTemplate<String, Object> redisTemplate;
-
-    public RedisAuthorizationCodeServices(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
-    public RedisTemplate<String, Object> getRedisTemplate() {
-        return redisTemplate;
-    }
-
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public RedisAuthorizationCodeServices(RedisRepository redisRepository) {
+        this.redisRepository = redisRepository;
+        this.valueSerializer = RedisSerializer.java();
     }
 
     /**
@@ -34,14 +28,14 @@ public class RedisAuthorizationCodeServices extends RandomValueAuthorizationCode
      */
     @Override
     protected void store(String code, OAuth2Authentication authentication) {
-        redisTemplate.opsForValue().set(redisKey(code), authentication, 10, TimeUnit.MINUTES);
+        redisRepository.setExpire(redisKey(code), authentication, 10, TimeUnit.MINUTES, valueSerializer);
     }
 
     @Override
     protected OAuth2Authentication remove(final String code) {
         String codeKey = redisKey(code);
-        OAuth2Authentication token = (OAuth2Authentication) redisTemplate.opsForValue().get(codeKey);
-        this.redisTemplate.delete(codeKey);
+        OAuth2Authentication token = (OAuth2Authentication) redisRepository.get(codeKey, valueSerializer);
+        redisRepository.del(codeKey);
         return token;
     }
 

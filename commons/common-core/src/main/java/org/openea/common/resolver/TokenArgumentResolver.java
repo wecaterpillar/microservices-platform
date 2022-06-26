@@ -21,8 +21,6 @@ import java.util.List;
 /**
  * Token转化SysUser
  *
- * @author zlt
- * @date 2018/12/21
  */
 @Slf4j
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
@@ -61,6 +59,8 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
         String userId = request.getHeader(SecurityConstants.USER_ID_HEADER);
         String username = request.getHeader(SecurityConstants.USER_HEADER);
         String roles = request.getHeader(SecurityConstants.ROLE_HEADER);
+        //账号类型
+        String accountType = request.getHeader(SecurityConstants.ACCOUNT_TYPE_HEADER);
         if (StrUtil.isBlank(username)) {
             log.warn("resolveArgument error username is empty");
             return null;

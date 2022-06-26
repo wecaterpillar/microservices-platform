@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openea</groupId>
-    <artifactId>ea-msp</artifactId>
-    <version>4.0.0</version>
+    <artifactId>msp</artifactId>
+    <version>5.3.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -13,49 +13,53 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <spring-cloud-alibaba-dependencies.version>2.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.2.9.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Hoxton.SR6</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>2.5.13</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2020.0.5</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <fastjson.version>1.2.70</fastjson.version>
-        <swagger.version>2.9.2</swagger.version>
-        <swagger.ui.version>1.8.7</swagger.ui.version>
-        <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
         <swagger.butler.version>2.0.1</swagger.butler.version>
         <jjwt.version>0.9.1</jjwt.version>
-        <druid-starter>1.1.22</druid-starter>
+        <druid-starter>1.2.6</druid-starter>
         <jasypt.version>1.14</jasypt.version>
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
-        <redisson-starter.version>3.11.5</redisson-starter.version>
+        <redisson-starter.version>3.16.1</redisson-starter.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
-        <hutool.version>5.1.4</hutool.version>
-        <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
-        <minio.version>3.0.10</minio.version>
+        <hutool.version>5.7.20</hutool.version>
+        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
         <easypoi.version>4.1.3</easypoi.version>
         <poi.version>4.1.1</poi.version>
-        <spring-boot-admin.version>2.2.3</spring-boot-admin.version>
+        <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration2.version>2.7</commons-configuration2.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.27.2</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
-        <transmittable.version>2.11.5</transmittable.version>
+        <transmittable.version>2.12.1</transmittable.version>
         <banner.version>1.0.2</banner.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <servlet-api.version>4.0.1</servlet-api.version>
-        <spring-data-elasticsearch.version>3.2.7.RELEASE</spring-data-elasticsearch.version>
-        <elasticsearch.version>7.8.0</elasticsearch.version>
+        <spring-data-elasticsearch.version>4.2.3</spring-data-elasticsearch.version>
+        <elasticsearch.version>7.13.4</elasticsearch.version>
+        <knife4j.version>2.0.5</knife4j.version>
+        <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
+        <dubbo.version>2.7.8</dubbo.version>
+        <curator.version>5.1.0</curator.version>
+        <jackson-databind.version>2.12.4</jackson-databind.version>
+        <commons-configuration.version>1.10</commons-configuration.version>
+        <zuul.version>2.2.9.RELEASE</zuul.version>
+        <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
+        <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
-        <sonar.exclusions>job/**/*, register/**/*, web/**/*</sonar.exclusions>
+        <sonar.exclusions>ea-job/**/*, ea-register/**/*, ea-web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
         <docker.volumes>/tmp</docker.volumes>
-        <docker.image.prefix>hub.zlt.com:8080/microservices-platform</docker.image.prefix>
+        <docker.image.prefix>hub.openea.org:8080/ea-msp</docker.image.prefix>
         <docker.java.security.egd>-Djava.security.egd=file:/dev/./urandom</docker.java.security.egd>
         <docker.java.opts>-Xms128m -Xmx128m</docker.java.opts>
     </properties>
@@ -76,11 +80,6 @@
             <version>${commons-beanutils.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -90,6 +89,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -97,57 +101,57 @@
             <!-- 自定义 starter -->
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>common-spring-boot-starter</artifactId>
+                <artifactId>ea-common-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>db-spring-boot-starter</artifactId>
+                <artifactId>ea-db-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>log-spring-boot-starter</artifactId>
+                <artifactId>ea-log-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>redis-spring-boot-starter</artifactId>
+                <artifactId>ea-redis-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>swagger2-spring-boot-starter</artifactId>
+                <artifactId>ea-swagger2-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>ribbon-spring-boot-starter</artifactId>
+                <artifactId>ea-loadbalancer-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>auth-client-spring-boot-starter</artifactId>
+                <artifactId>ea-auth-client-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>sentinel-spring-boot-starter</artifactId>
+                <artifactId>ea-sentinel-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>config</artifactId>
+                <artifactId>ea-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>common-core</artifactId>
+                <artifactId>ea-common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openea</groupId>
-                <artifactId>elasticsearch-spring-boot-starter</artifactId>
+                <artifactId>ea-elasticsearch-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -172,6 +176,11 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
             <!-- 加入spring security spring security oauth2的处理 -->
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
@@ -191,31 +200,6 @@
             </dependency>
             <!-- swagger -->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-bean-validators</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>${swagger.ui.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zyplayer</groupId>
-                <artifactId>swagger-mg-ui</artifactId>
-                <version>${swagger.mg.ui.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.github.zlt2000</groupId>
                 <artifactId>swagger-butler-core</artifactId>
                 <version>${swagger.butler.version}</version>
@@ -231,11 +215,6 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -263,11 +242,6 @@
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-base</artifactId>
                 <version>${easypoi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
@@ -355,6 +329,11 @@
                 <version>${elasticsearch.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch-x-content</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-client</artifactId>
                 <version>${elasticsearch.version}</version>
@@ -363,6 +342,71 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openea</groupId>
+                <artifactId>ea-oss-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openea</groupId>
+                <artifactId>ea-zookeeper-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>${spring-cloud-starter-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws-java-sdk-s3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+                <version>${zuul.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons-configuration.version}</version>
             </dependency>
 
             <dependency>
@@ -414,18 +458,19 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>opentech-share</id>
-            <name>share</name>
-            <url>https://openmall-maven.pkg.coding.net/repository/opentech/share/</url>
-        </repository>
     </repositories>
     <distributionManagement>
         <repository>
-            <id>opentech-share</id>
-            <name>share</name>
-            <url>https://openmall-maven.pkg.coding.net/repository/opentech/share/</url>
+            <id>releases</id>
+            <name>releases Repository</name>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
         </repository>
+
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
     </distributionManagement>
 
     <modules>
@@ -459,11 +504,5 @@
     </licenses>
 
     <developers>
-        <developer>
-            <name>LeTao Zhu</name>
-            <email>zltdiablo@163.com</email>
-            <organizationUrl>https://github.com/zlt2000</organizationUrl>
-            <url>https://blog.csdn.net/zlt2000</url>
-        </developer>
     </developers>
 </project>

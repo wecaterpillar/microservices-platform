@@ -5,15 +5,15 @@ sharding:
       ds-alibaba:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${openea.datasource.ip}:3306/demo_ds_alibaba?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-        username: ${openea.datasource.username}
-        password: ${openea.datasource.password}
+        url: jdbc:mysql://${ea.datasource.ip}:3306/demo_ds_alibaba?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+        username: ${ea.datasource.username}
+        password: ${ea.datasource.password}
       ds-baidu:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${openea.datasource.ip}:3306/demo_ds_baidu?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-        username: ${openea.datasource.username}
-        password: ${openea.datasource.password}
+        url: jdbc:mysql://${ea.datasource.ip}:3306/demo_ds_baidu?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+        username: ${ea.datasource.username}
+        password: ${ea.datasource.password}
     config:
       sharding:
         default-database-strategy:

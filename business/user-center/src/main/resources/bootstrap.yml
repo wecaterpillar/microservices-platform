@@ -8,4 +8,4 @@ spring:
 #    nacos:
 #      discovery:
 #        metadata:
-#          version: zlt
+#          version: ea

@@ -6,9 +6,7 @@ import org.openea.user.model.SysRoleUser;
 
 import java.util.List;
 
-/**
- * @author zlt
- */
+
 public interface ISysRoleUserService extends ISuperService<SysRoleUser> {
 	int deleteUserRole(Long userId, Long roleId);
 

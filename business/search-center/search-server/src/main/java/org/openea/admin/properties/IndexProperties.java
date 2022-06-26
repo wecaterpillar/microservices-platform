@@ -8,11 +8,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 /**
  * 索引配置
  *
- * @author zlt
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.indices")
+@ConfigurationProperties(prefix = "ea.indices")
 @RefreshScope
 public class IndexProperties {
     /**

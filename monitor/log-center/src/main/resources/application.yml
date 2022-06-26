@@ -1,4 +1,4 @@
-openea:
+ea:
   swagger:
     enabled: true
     title: 日志中心

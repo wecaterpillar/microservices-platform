@@ -1,5 +1,5 @@
 $(function(){
-
+	
 	//
 	$('.form_text_ipt input').focus(function(){
 		$(this).parent().css({
@@ -12,7 +12,7 @@ $(function(){
 		});
 		//$(this).parent().next().hide();
 	});
-
+	
 	//
 	$('.form_text_ipt input').bind('input propertychange',function(){
 		if($(this).val()==""){

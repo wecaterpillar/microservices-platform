@@ -7,10 +7,8 @@ import org.apache.ibatis.reflection.MetaObject;
 import java.util.Date;
 
 /**
- * 自定义填充公共 name 字段
+ * 自定义填充公共字段
  *
- * @author zlt
- * @date 2018/12/11
  */
 public class DateMetaObjectHandler implements MetaObjectHandler {
     private MybatisPlusAutoFillProperties autoFillProperties;
@@ -55,8 +53,6 @@ public class DateMetaObjectHandler implements MetaObjectHandler {
 
     /**
      * 更新填充
-     *
-     * @param metaObject
      */
     @Override
     public void updateFill(MetaObject metaObject) {

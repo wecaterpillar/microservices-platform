@@ -1,6 +1,7 @@
 package org.openea.common.utils;
 
-import cn.hutool.core.codec.Base64;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import java.security.KeyFactory;
@@ -13,8 +14,6 @@ import java.security.spec.X509EncodedKeySpec;
 /**
  * RSA加解密工具类
  *
- * @author zlt
- * @date 2019/7/16
  */
 public class RsaUtils {
     /**
@@ -32,7 +31,8 @@ public class RsaUtils {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] output = cipher.doFinal(content.getBytes());
-            return Base64.encode(output);
+            BASE64Encoder encoder = new BASE64Encoder();
+            return encoder.encode(output);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -81,7 +81,8 @@ public class RsaUtils {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte [] b = cipher.doFinal(content.getBytes());
-            return Base64.encode(b);
+            BASE64Encoder encoder = new BASE64Encoder();
+            return encoder.encode(b);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -94,7 +95,7 @@ public class RsaUtils {
      */
     public static RSAPublicKey getPublicKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = Base64.decode(key);
+        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPublicKey)keyFactory.generatePublic(keySpec);
@@ -106,7 +107,7 @@ public class RsaUtils {
      */
     public static PrivateKey getPrivateKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = Base64.decode(key);
+        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePrivate(keySpec);

@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 验证码提供
- * @author zlt
- * @date 2018/12/18
  */
 @Controller
 public class ValidateCodeController {

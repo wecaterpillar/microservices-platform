@@ -11,10 +11,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
-/**
- * @author zlt
- * @date 2018/12/13
- */
+
 @Setter
 @Getter
 @EnableAsync(proxyTargetClass = true)
@@ -37,7 +34,7 @@ public class DefaultAsycTaskConfig {
     /**
      *  线程池前缀
      */
-    @Value("${asyc-task.threadNamePrefix:ZltExecutor-}")
+    @Value("${asyc-task.threadNamePrefix:EaExecutor-}")
     private String threadNamePrefix;
 
     @Bean

@@ -5,10 +5,7 @@ import io.seata.rm.datasource.DataSourceProxy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.*;
 
-/**
- * @author zlt
- * @date 2019/9/14
- */
+
 public class DataSourceProxyConfig {
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")

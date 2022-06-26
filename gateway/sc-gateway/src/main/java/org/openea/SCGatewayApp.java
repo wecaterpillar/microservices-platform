@@ -1,10 +1,11 @@
 package org.openea;
 
-import org.openea.common.ribbon.annotation.EnableBaseFeignInterceptor;
+import org.openea.common.lb.annotation.EnableBaseFeignInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+
 
 @EnableFeignClients
 @EnableBaseFeignInterceptor

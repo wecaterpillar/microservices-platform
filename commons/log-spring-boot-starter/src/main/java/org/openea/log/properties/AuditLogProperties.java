@@ -8,12 +8,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 /**
  * 审计日志配置
  *
- * @author zlt
- * @date 2020/2/3
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.audit-log")
+@ConfigurationProperties(prefix = "ea.audit-log")
 @RefreshScope
 public class AuditLogProperties {
     /**

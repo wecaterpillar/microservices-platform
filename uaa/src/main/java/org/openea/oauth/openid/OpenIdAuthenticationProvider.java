@@ -1,24 +1,25 @@
 package org.openea.oauth.openid;
 
+import org.openea.oauth.service.impl.UserDetailServiceFactory;
 import org.openea.oauth2.common.token.OpenIdAuthenticationToken;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.social.security.SocialUserDetailsService;
 
-/**
- * @author zlt
- */
+
+@Setter
+@Getter
 public class OpenIdAuthenticationProvider implements AuthenticationProvider {
-
-    private SocialUserDetailsService userDetailsService;
+    private UserDetailServiceFactory userDetailsServiceFactory;
 
     @Override
     public Authentication authenticate(Authentication authentication) {
         OpenIdAuthenticationToken authenticationToken = (OpenIdAuthenticationToken) authentication;
         String openId = (String) authenticationToken.getPrincipal();
-        UserDetails user = userDetailsService.loadUserByUserId(openId);
+        UserDetails user = userDetailsServiceFactory.getService(authenticationToken).loadUserByUserId(openId);
         if (user == null) {
             throw new InternalAuthenticationServiceException("openId错误");
         }
@@ -30,13 +31,5 @@ public class OpenIdAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
         return OpenIdAuthenticationToken.class.isAssignableFrom(authentication);
-    }
-
-    public SocialUserDetailsService getUserDetailsService() {
-        return userDetailsService;
-    }
-
-    public void setUserDetailsService(SocialUserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
     }
 }

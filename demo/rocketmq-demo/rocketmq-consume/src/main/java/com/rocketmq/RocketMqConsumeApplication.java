@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Rocketmq消费者 demo
  *
- * @author zlt
  */
 @SpringBootApplication
 public class RocketMqConsumeApplication {

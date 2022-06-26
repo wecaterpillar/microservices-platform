@@ -8,9 +8,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-/**
- * @author zlt
- */
+
 @Service
 public class ReceiveService {
 	/**

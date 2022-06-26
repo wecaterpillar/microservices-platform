@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * 订单
  *
- * @author zlt
- * @date 2019/9/14
  */
 @FeignClient(name = "order-service")
 public interface OrderFeignClient {

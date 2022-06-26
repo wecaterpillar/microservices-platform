@@ -1,9 +1,7 @@
 package org.openea.gateway.filter;
 
-import cn.hutool.core.util.IdUtil;
-import org.openea.common.constant.CommonConstant;
 import org.openea.log.properties.TraceProperties;
-import org.slf4j.MDC;
+import org.openea.log.trace.MDCTraceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -16,8 +14,6 @@ import reactor.core.publisher.Mono;
 /**
  * 生成日志链路追踪id，并传入header中
  *
- * @author zlt
- * @date 2019/10/7
  */
 @Component
 public class TraceFilter implements GlobalFilter, Ordered {
@@ -28,10 +24,13 @@ public class TraceFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         if (traceProperties.getEnable()) {
             //链路追踪id
-            String traceId = IdUtil.fastSimpleUUID();
-            MDC.put(CommonConstant.LOG_TRACE_ID, traceId);
+            MDCTraceUtils.addTrace();
+
             ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
-                    .headers(h -> h.add(CommonConstant.TRACE_ID_HEADER, traceId))
+                    .headers(h -> {
+                        h.add(MDCTraceUtils.TRACE_ID_HEADER, MDCTraceUtils.getTraceId());
+                        h.add(MDCTraceUtils.SPAN_ID_HEADER, MDCTraceUtils.getNextSpanId());
+                    })
                     .build();
 
             ServerWebExchange build = exchange.mutate().request(serverHttpRequest).build();

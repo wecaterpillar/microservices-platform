@@ -3,16 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openea</groupId>
-        <artifactId>commons</artifactId>
-        <version>4.0.0</version>
+        <artifactId>ea-commons</artifactId>
+        <version>5.3.0</version>
     </parent>
-    <artifactId>common-core</artifactId>
+    <artifactId>ea-common-core</artifactId>
     <description>公共通用组件</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>log-spring-boot-starter</artifactId>
+            <artifactId>ea-log-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -24,9 +24,8 @@
             <artifactId>spring-social-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
 
         <dependency>

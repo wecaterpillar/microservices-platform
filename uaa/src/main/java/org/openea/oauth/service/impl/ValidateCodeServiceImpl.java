@@ -1,6 +1,7 @@
 package org.openea.oauth.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import org.openea.common.feign.UserService;
 import org.openea.common.redis.template.RedisRepository;
 import org.openea.common.constant.SecurityConstants;
@@ -9,14 +10,11 @@ import org.openea.common.model.SysUser;
 import org.openea.oauth.exception.ValidateCodeException;
 import org.openea.oauth.service.IValidateCodeService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+
 
 @Slf4j
 @Service
@@ -92,11 +90,11 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      */
     @Override
     public void validate(String deviceId, String validCode) {
-        if (StringUtils.isBlank(deviceId)) {
+        if (StrUtil.isBlank(deviceId)) {
             throw new ValidateCodeException("请在请求参数中携带deviceId参数");
         }
         String code = this.getCode(deviceId);
-        if (StringUtils.isBlank(validCode)) {
+        if (StrUtil.isBlank(validCode)) {
             throw new ValidateCodeException("请填写验证码");
         }
 
@@ -104,7 +102,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
             throw new ValidateCodeException("验证码不存在或已过期");
         }
 
-        if (!StringUtils.equals(code, validCode.toLowerCase())) {
+        if (!StrUtil.equals(code, validCode.toLowerCase())) {
             throw new ValidateCodeException("验证码不正确");
         }
 

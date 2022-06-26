@@ -14,10 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author zlt
- * 用户实体绑定spring security
- */
+
 @Getter
 @Setter
 public class LoginAppUser extends SysUser implements SocialUserDetails {
@@ -33,7 +30,7 @@ public class LoginAppUser extends SysUser implements SocialUserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new HashSet<>();
         if (!CollectionUtils.isEmpty(super.getRoles())) {
-            super.getRoles().parallelStream().forEach(role -> collection.add(new SimpleGrantedAuthority(role.getCode())));
+            super.getRoles().forEach(role -> collection.add(new SimpleGrantedAuthority(role.getCode())));
         }
         return collection;
     }

@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 /**
  * 审计日志
  *
- * @author zlt
- * @date 2020/2/3
  */
 @Setter
 @Getter

@@ -2,9 +2,7 @@ package org.openea.generator.model;
 
 import java.util.List;
 
-/**
- * @Author: zlt
- */
+
 public class TableEntity {
     /**
      * 表的名称

@@ -3,28 +3,28 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openea</groupId>
-        <artifactId>monitor</artifactId>
-        <version>4.0.0</version>
+        <artifactId>ea-monitor</artifactId>
+        <version>5.3.0</version>
     </parent>
     <artifactId>log-center</artifactId>
     <dependencies>
         <!-- 公共实体类模块 -->
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>config</artifactId>
+            <artifactId>ea-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>common-spring-boot-starter</artifactId>
+            <artifactId>ea-common-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>ribbon-spring-boot-starter</artifactId>
+            <artifactId>ea-loadbalancer-spring-boot-starter</artifactId>
         </dependency>
         <!-- swagger -->
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>swagger2-spring-boot-starter</artifactId>
+            <artifactId>ea-swagger2-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
@@ -46,6 +46,11 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 

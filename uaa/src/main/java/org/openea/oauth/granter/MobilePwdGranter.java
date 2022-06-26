@@ -12,6 +12,10 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * openId授权模式
+ *
+ */
 public class MobilePwdGranter extends AbstractTokenGranter {
     private static final String GRANT_TYPE = "mobile_password";
 

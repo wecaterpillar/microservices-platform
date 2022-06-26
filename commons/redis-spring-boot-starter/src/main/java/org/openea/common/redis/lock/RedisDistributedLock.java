@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis分布式锁实现
  *
+ * @deprecated 建议使用Redisson的实现方式 {@link RedissonDistributedLock}
  */
 @Slf4j
 @ConditionalOnClass(RedisTemplate.class)

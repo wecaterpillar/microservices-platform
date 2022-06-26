@@ -8,10 +8,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-/**
- * @author zlt
- * @date 2019/10/7
- */
+
 @Slf4j
 public class ReactiveAddrUtil {
     private final static String UNKNOWN_STR = "unknown";

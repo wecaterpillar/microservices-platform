@@ -8,8 +8,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * 业务
  *
- * @author zlt
- * @date 2019/9/14
  */
 @EnableDiscoveryClient
 @EnableFeignClients

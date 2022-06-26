@@ -8,12 +8,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 /**
  * mybatis-plus 配置
  *
- * @author zlt
- * @date 2020/4/5
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.mybatis-plus.auto-fill")
+@ConfigurationProperties(prefix = "ea.mybatis-plus.auto-fill")
 @RefreshScope
 public class MybatisPlusAutoFillProperties {
     /**

@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Author zlt
- */
+
 @Component
 @Mapper
 public interface SysGeneratorMapper extends SuperMapper {

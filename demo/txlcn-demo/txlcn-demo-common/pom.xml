@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.openea</groupId>
         <artifactId>txlcn-demo</artifactId>
-        <version>4.0.0</version>
+        <version>5.3.0</version>
     </parent>
     <artifactId>txlcn-demo-common</artifactId>
     <name>demo-common</name>
@@ -22,7 +22,7 @@
 
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>config</artifactId>
+            <artifactId>ea-config</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.alibaba.cloud</groupId>
@@ -32,19 +32,19 @@
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>log-spring-boot-starter</artifactId>
+            <artifactId>ea-log-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>db-spring-boot-starter</artifactId>
+            <artifactId>ea-db-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>ribbon-spring-boot-starter</artifactId>
+            <artifactId>ea-loadbalancer-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openea</groupId>
-            <artifactId>sentinel-spring-boot-starter</artifactId>
+            <artifactId>ea-sentinel-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>

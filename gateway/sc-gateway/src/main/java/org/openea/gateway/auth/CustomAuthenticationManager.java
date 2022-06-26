@@ -9,10 +9,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import reactor.core.publisher.Mono;
 
-/**
- * @author zlt
- * @date 2019/10/6
- */
+
 public class CustomAuthenticationManager implements ReactiveAuthenticationManager {
     private TokenStore tokenStore;
 

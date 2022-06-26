@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://${openea.datasource.ip}:3306/user-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
-    username: ${openea.datasource.username}
-    password: ${openea.datasource.password}
+    url: jdbc:mysql://${ea.datasource.ip}:3306/user-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: ${ea.datasource.username}
+    password: ${ea.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:

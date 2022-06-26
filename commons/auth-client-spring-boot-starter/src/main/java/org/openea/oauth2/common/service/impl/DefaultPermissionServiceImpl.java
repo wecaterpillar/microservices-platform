@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * 请求权限判断service
+ *
  */
 @Slf4j
 public abstract class DefaultPermissionServiceImpl {
@@ -29,7 +30,7 @@ public abstract class DefaultPermissionServiceImpl {
     @Autowired
     private SecurityProperties securityProperties;
 
-    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     /**
      * 查询当前用户拥有的资源权限

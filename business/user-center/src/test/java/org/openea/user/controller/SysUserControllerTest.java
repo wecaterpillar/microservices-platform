@@ -24,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * SysUserControllerTest单元测试用例
  *
- * @author zlt
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {UserCenterApp.class})

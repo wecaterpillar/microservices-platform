@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- * @author zlt
- * @date 2020/2/22
- */
+
 @Controller
 public class HomeController {
     @GetMapping("/")

@@ -12,9 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author zlt
- */
+
 @Slf4j
 @Service
 public class SysRoleMenuServiceImpl extends SuperServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements ISysRoleMenuService  {

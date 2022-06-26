@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.TokenExtractor;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -16,9 +17,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.annotation.Resource;
 
-/**
- * @author zlt
- */
+
 @Import(DefaultSecurityHandlerConfig.class)
 public class DefaultResourceServerConf extends ResourceServerConfigurerAdapter {
     @Autowired
@@ -36,13 +35,17 @@ public class DefaultResourceServerConf extends ResourceServerConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Resource
+    private TokenExtractor tokenExtractor;
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.tokenStore(tokenStore)
                 .stateless(true)
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .expressionHandler(expressionHandler)
-                .accessDeniedHandler(oAuth2AccessDeniedHandler);
+                .accessDeniedHandler(oAuth2AccessDeniedHandler)
+                .tokenExtractor(tokenExtractor);
     }
 
     @Override

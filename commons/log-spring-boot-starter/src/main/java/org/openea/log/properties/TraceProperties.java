@@ -8,12 +8,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 /**
  * 日志链路追踪配置
  *
- * @author zlt
- * @date 2019/8/13
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.trace")
+@ConfigurationProperties(prefix = "ea.trace")
 @RefreshScope
 public class TraceProperties {
     /**

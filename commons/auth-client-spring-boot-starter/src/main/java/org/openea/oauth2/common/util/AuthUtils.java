@@ -1,22 +1,27 @@
 package org.openea.oauth2.common.util;
 
 import org.openea.common.constant.CommonConstant;
+import org.openea.common.constant.SecurityConstants;
 import org.openea.common.model.SysUser;
+import org.openea.common.utils.SpringUtil;
+import org.openea.oauth2.common.token.CustomWebAuthenticationDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * 认证授权相关工具类
  *
- * @author zlt
- * @date 2018/5/13
  */
 @Slf4j
 public class AuthUtils {
@@ -64,6 +69,29 @@ public class AuthUtils {
     }
 
     /**
+     * 校验accessToken
+     */
+    public static void checkAccessToken(HttpServletRequest request) {
+        String accessToken = extractToken(request);
+        checkAccessToken(accessToken);
+    }
+
+    public static void checkAccessToken(String accessTokenValue) {
+        TokenStore tokenStore = SpringUtil.getBean(TokenStore.class);
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);
+        if (accessToken == null || accessToken.getValue() == null) {
+            throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
+        } else if (accessToken.isExpired()) {
+            tokenStore.removeAccessToken(accessToken);
+            throw new InvalidTokenException("Access token expired: " + accessTokenValue);
+        }
+        OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
+        if (result == null) {
+            throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
+        }
+    }
+
+    /**
      * *从header 请求中的clientId:clientSecret
      */
     public static String[] extractClient(HttpServletRequest request) {
@@ -102,5 +130,27 @@ public class AuthUtils {
             username = (String) principal;
         }
         return username;
+    }
+
+    /**
+     * 获取登陆的帐户类型
+     */
+    public static String getAccountType(Authentication authentication) {
+        String accountType = null;
+        if (authentication != null) {
+            Object details = authentication.getDetails();
+            if (details != null) {
+                if (details instanceof CustomWebAuthenticationDetails) {
+                    CustomWebAuthenticationDetails detailsObj = (CustomWebAuthenticationDetails) details;
+                    accountType = detailsObj.getAccountType();
+                } else {
+                    Map<String, String> detailsMap = (Map<String, String>) details;
+                    if (detailsMap != null) {
+                        accountType = detailsMap.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
+                    }
+                }
+            }
+        }
+        return accountType;
     }
 }

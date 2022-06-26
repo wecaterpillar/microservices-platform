@@ -7,9 +7,7 @@ import org.openea.user.model.SysRoleMenu;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author zlt
- */
+
 public interface ISysRoleMenuService extends ISuperService<SysRoleMenu> {
 	int save(Long roleId, Long menuId);
 

@@ -2,15 +2,13 @@ package org.openea.gateway.feign.fallback;
 
 import cn.hutool.core.collection.CollectionUtil;
 import org.openea.gateway.feign.MenuService;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
  * menuService降级工场
  *
- * @author zlt
- * @date 2019/1/18
  */
 @Slf4j
 @Component

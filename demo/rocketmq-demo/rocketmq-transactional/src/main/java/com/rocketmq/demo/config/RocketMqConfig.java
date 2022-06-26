@@ -8,9 +8,7 @@ import org.springframework.messaging.SubscribableChannel;
 
 import com.rocketmq.demo.config.RocketMqConfig.MySink;
 
-/**
- * @author zlt
- */
+
 @EnableBinding({ Source.class, MySink.class })
 public class RocketMqConfig {
     public interface MySink {

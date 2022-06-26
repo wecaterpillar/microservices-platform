@@ -16,6 +16,7 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,11 +26,10 @@ import java.time.LocalDateTime;
 /**
  * 审计日志切面
  *
- * @author zlt
- * @date 2020/2/3
  */
 @Slf4j
 @Aspect
+@Component
 @ConditionalOnClass({HttpServletRequest.class, RequestContextHolder.class})
 public class AuditLogAspect {
     @Value("${spring.application.name}")

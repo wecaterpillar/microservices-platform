@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openea.common.model.PageResult;
-import org.openea.common.model.Result;
-import org.openea.common.model.SysRole;
 import org.openea.user.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.openea.common.model.PageResult;
+import org.openea.common.model.Result;
+import org.openea.common.model.SysRole;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

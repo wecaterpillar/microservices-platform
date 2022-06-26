@@ -1,0 +1,14 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: ea-websocket
+  main:
+    allow-bean-definition-overriding: true
+
+ea:
+  security:
+    ignore:
+      httpUrls: >
+        /websocket/**

@@ -12,9 +12,7 @@ import org.openea.common.model.LoginAppUser;
 import org.openea.common.model.SysRole;
 import org.openea.common.model.SysUser;
 
-/**
-* @author zlt
- */
+
 public interface ISysUserService extends ISuperService<SysUser> {
 	/**
 	 * 获取UserDetails对象

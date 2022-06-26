@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-
 /**
  * @author xuxueli 2018-11-01
  */

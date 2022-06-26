@@ -1,25 +1,31 @@
 package org.openea.oauth2.common.util;
 
-import com.alibaba.fastjson.JSONObject;
 import org.openea.common.constant.SecurityConstants;
+import org.openea.common.utils.JsonUtil;
 import org.openea.common.utils.RsaUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
+import org.springframework.security.jwt.crypto.sign.RsaSigner;
 import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import org.springframework.security.jwt.crypto.sign.SignatureVerifier;
+import org.springframework.security.jwt.crypto.sign.Signer;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.stream.Collectors;
 
 /**
  * jwt工具类
  *
- * @author zlt
- * @date 2019/7/21
  */
 public class JwtUtils {
     private static final String PUBKEY_START = "-----BEGIN PUBLIC KEY-----";
@@ -46,10 +52,10 @@ public class JwtUtils {
      * @param rsaPublicKey 公钥
      * @return
      */
-    public static JSONObject decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey) {
+    public static JsonNode decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey) {
         SignatureVerifier rsaVerifier = new RsaVerifier(rsaPublicKey);
         Jwt jwt = JwtHelper.decodeAndVerify(jwtToken, rsaVerifier);
-        return JSONObject.parseObject(jwt.getClaims());
+        return JsonUtil.parse(jwt.getClaims());
     }
 
     /**
@@ -57,7 +63,7 @@ public class JwtUtils {
      * @param jwtToken token值
      * @return
      */
-    public static JSONObject decodeAndVerify(String jwtToken) {
+    public static JsonNode decodeAndVerify(String jwtToken) {
         return decodeAndVerify(jwtToken, getPubKeyObj());
     }
 
@@ -67,8 +73,8 @@ public class JwtUtils {
      * @param currTime 当前时间
      * @return 未过期：true，已过期：false
      */
-    public static boolean checkExp(JSONObject claims, long currTime) {
-        long exp = claims.getLong("exp");
+    public static boolean checkExp(JsonNode claims, long currTime) {
+        long exp = claims.get("exp").asLong();
         if (exp < currTime) {
             return false;
         }
@@ -80,7 +86,21 @@ public class JwtUtils {
      * @param claims jwt内容
      * @return 未过期：true，已过期：false
      */
-    public static boolean checkExp(JSONObject claims) {
+    public static boolean checkExp(JsonNode claims) {
         return checkExp(claims, System.currentTimeMillis());
+    }
+
+    public static Jwt encode(CharSequence content, KeyProperties keyProperties) {
+        KeyPair keyPair = new KeyStoreKeyFactory(
+                    keyProperties.getKeyStore().getLocation(),
+                    keyProperties.getKeyStore().getSecret().toCharArray())
+                .getKeyPair(keyProperties.getKeyStore().getAlias());
+        PrivateKey privateKey = keyPair.getPrivate();
+        Signer rsaSigner = new RsaSigner((RSAPrivateKey) privateKey);
+        return JwtHelper.encode(content, rsaSigner);
+    }
+
+    public static String encodeStr(CharSequence content, KeyProperties keyProperties) {
+        return encode(content, keyProperties).getEncoded();
     }
 }

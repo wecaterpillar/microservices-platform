@@ -1,8 +1,6 @@
 package org.openea.common.model;
 
-/**
- * @Author: zlt
- */
+
 public enum CodeEnum {
     SUCCESS(0),
     ERROR(1);

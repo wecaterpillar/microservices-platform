@@ -8,8 +8,6 @@ import lombok.experimental.Accessors;
 /**
  * 账号
  *
- * @author zlt
- * @date 2019/9/14
  */
 @Data
 @Accessors(chain = true)

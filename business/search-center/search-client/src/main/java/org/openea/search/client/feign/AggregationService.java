@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Map;
 
-/**
- * @author zlt
- */
+
 @FeignClient(name = ServiceNameConstants.SEARCH_SERVICE, fallbackFactory = SearchServiceFallbackFactory.class, decode404 = true)
 public interface AggregationService {
     /**

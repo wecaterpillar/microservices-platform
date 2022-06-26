@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -18,11 +19,10 @@ import javax.sql.DataSource;
 /**
  * 审计日志实现类-数据库
  *
- * @author zlt
- * @date 2020/2/8
  */
 @Slf4j
-@ConditionalOnProperty(name = "openea.audit-log.log-type", havingValue = "db")
+@Service
+@ConditionalOnProperty(name = "ea.audit-log.log-type", havingValue = "db")
 @ConditionalOnClass(JdbcTemplate.class)
 public class DbAuditServiceImpl implements IAuditService {
     private static final String INSERT_SQL = " insert into sys_logger " +

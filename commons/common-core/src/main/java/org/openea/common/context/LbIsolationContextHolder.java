@@ -5,8 +5,6 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 /**
  * 负载均衡策略Holder
  *
- * @author zlt
- * @date 2019/9/2
  */
 public class LbIsolationContextHolder {
     private static final ThreadLocal<String> VERSION_CONTEXT = new TransmittableThreadLocal<>();

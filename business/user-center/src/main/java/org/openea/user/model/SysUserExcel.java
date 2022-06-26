@@ -9,7 +9,6 @@ import java.util.Date;
 
 /**
  * 用户导出实例
- * @Author: zlt
  */
 @Data
 public class SysUserExcel implements Serializable {

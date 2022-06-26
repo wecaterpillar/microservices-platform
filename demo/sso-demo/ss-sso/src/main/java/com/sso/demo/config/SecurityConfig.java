@@ -13,8 +13,6 @@ import javax.annotation.Resource;
 /**
  * security配置
  *
- * @author zlt
- * @date 2020/2/22
  */
 @EnableOAuth2Sso
 @Configuration

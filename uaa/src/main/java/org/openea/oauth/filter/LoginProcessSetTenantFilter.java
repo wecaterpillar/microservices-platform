@@ -1,9 +1,9 @@
 package org.openea.oauth.filter;
 
 import cn.hutool.core.util.ArrayUtil;
-import org.springframework.http.HttpMethod;
 import org.openea.common.constant.SecurityConstants;
 import org.openea.common.context.TenantContextHolder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -59,4 +59,3 @@ public class LoginProcessSetTenantFilter extends OncePerRequestFilter {
         return requiresAuthenticationRequestMatcher.matches(request);
     }
 }
-

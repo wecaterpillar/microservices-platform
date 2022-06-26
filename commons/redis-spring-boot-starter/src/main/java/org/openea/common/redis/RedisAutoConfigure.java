@@ -2,19 +2,18 @@ package org.openea.common.redis;
 
 import org.openea.common.redis.properties.CacheManagerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.*;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -22,6 +21,7 @@ import java.util.Map;
 
 /**
  * redis 配置类
+ *
  */
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching
@@ -36,7 +36,7 @@ public class RedisAutoConfigure {
 
     @Bean
     public RedisSerializer<Object> redisValueSerializer() {
-        return RedisSerializer.java();
+        return RedisSerializer.json();
     }
 
     /**

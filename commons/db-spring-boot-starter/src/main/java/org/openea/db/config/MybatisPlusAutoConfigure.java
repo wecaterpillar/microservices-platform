@@ -1,12 +1,12 @@
 package org.openea.db.config;
 
-import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.openea.common.properties.TenantProperties;
+import org.openea.db.interceptor.CustomTenantInterceptor;
 import org.openea.db.properties.MybatisPlusAutoFillProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -17,16 +17,11 @@ import org.springframework.context.annotation.Bean;
 /**
  * mybatis-plus自动配置
  *
- * @author zlt
- * @date 2020/4/5
  */
 @EnableConfigurationProperties(MybatisPlusAutoFillProperties.class)
 public class MybatisPlusAutoConfigure {
     @Autowired
-    private TenantHandler tenantHandler;
-
-    @Autowired
-    private ISqlParserFilter sqlParserFilter;
+    private TenantLineHandler tenantLineHandler;
 
     @Autowired
     private TenantProperties tenantProperties;
@@ -38,22 +33,22 @@ public class MybatisPlusAutoConfigure {
      * 分页插件，自动识别数据库类型
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+    public MybatisPlusInterceptor paginationInterceptor() {
+        MybatisPlusInterceptor mpInterceptor = new MybatisPlusInterceptor();
         boolean enableTenant = tenantProperties.getEnable();
         //是否开启多租户隔离
         if (enableTenant) {
-            TenantSqlParser tenantSqlParser = new TenantSqlParser()
-                    .setTenantHandler(tenantHandler);
-            paginationInterceptor.setSqlParserList(CollUtil.toList(tenantSqlParser));
-            paginationInterceptor.setSqlParserFilter(sqlParserFilter);
+            CustomTenantInterceptor tenantInterceptor = new CustomTenantInterceptor(
+                    tenantLineHandler, tenantProperties.getIgnoreSqls());
+            mpInterceptor.addInnerInterceptor(tenantInterceptor);
         }
-        return paginationInterceptor;
+        mpInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return mpInterceptor;
     }
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = "openea.mybatis-plus.auto-fill", name = "enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "ea.mybatis-plus.auto-fill", name = "enabled", havingValue = "true", matchIfMissing = true)
     public MetaObjectHandler metaObjectHandler() {
         return new DateMetaObjectHandler(autoFillProperties);
     }

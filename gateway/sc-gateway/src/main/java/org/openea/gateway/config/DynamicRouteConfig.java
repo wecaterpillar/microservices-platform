@@ -11,11 +11,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 动态路由配置
  *
- * @author zlt
- * @date 2019/10/7
  */
 @Configuration
-@ConditionalOnProperty(prefix = "openea.gateway.dynamicRoute", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "ea.gateway.dynamicRoute", name = "enabled", havingValue = "true")
 public class DynamicRouteConfig {
     @Autowired
     private ApplicationEventPublisher publisher;
@@ -24,7 +22,7 @@ public class DynamicRouteConfig {
      * Nacos实现方式
      */
     @Configuration
-    @ConditionalOnProperty(prefix = "openea.gateway.dynamicRoute", name = "dataType", havingValue = "nacos", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "ea.gateway.dynamicRoute", name = "dataType", havingValue = "nacos", matchIfMissing = true)
     public class NacosDynRoute {
         @Autowired
         private NacosConfigProperties nacosConfigProperties;

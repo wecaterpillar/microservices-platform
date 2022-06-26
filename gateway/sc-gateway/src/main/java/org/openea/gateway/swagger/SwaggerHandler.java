@@ -17,10 +17,7 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
-/**
- * @author zlt
- * @date 2019/10/5
- */
+
 @RestController
 @RequestMapping("/swagger-resources" )
 public class SwaggerHandler {

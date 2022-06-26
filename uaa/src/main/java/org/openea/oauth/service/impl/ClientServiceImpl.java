@@ -1,8 +1,8 @@
 package org.openea.oauth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.openea.common.constant.CommonConstant;
 import org.openea.common.lock.DistributedLock;
 import org.openea.common.redis.template.RedisRepository;
 import org.openea.common.constant.SecurityConstants;
@@ -21,13 +21,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author zlt
- */
+
 @Slf4j
 @Service
 public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> implements IClientService {
-    private final static String LOCK_KEY_CLIENTID = CommonConstant.LOCK_KEY_PREFIX+"clientId:";
+    private final static String LOCK_KEY_CLIENTID = "clientId:";
 
     @Autowired
     private RedisRepository redisRepository;
@@ -67,6 +65,13 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
         String clientId = baseMapper.selectById(id).getClientId();
         baseMapper.deleteById(id);
         redisRepository.del(clientRedisKey(clientId));
+    }
+
+    @Override
+    public Client loadClientByClientId(String clientId) {
+        QueryWrapper<Client> wrapper = Wrappers.query();
+        wrapper.eq("client_id", clientId);
+        return this.getOne(wrapper);
     }
 
     private String clientRedisKey(String clientId) {

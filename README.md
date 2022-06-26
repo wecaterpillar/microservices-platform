@@ -1,10 +1,10 @@
 #  microservices-platform
 
 基于以下开源项目改造：
- - [microservices-platform](https://gitee.com/zlt2000/microservices-platform) 
- - [open-capacity-platform](https://gitee.com/owenwangwen/open-capacity-platform)
- - [open-cloud/open-cloud-pro](https://github.com/liuyadu/open-cloud)
- 
+- [microservices-platform](https://gitee.com/zlt2000/microservices-platform)
+- [open-capacity-platform](https://gitee.com/owenwangwen/open-capacity-platform)
+- [open-cloud/open-cloud-pro](https://github.com/liuyadu/open-cloud)
+
 ## 1. 项目介绍
 
 * 前后端分离的企业级微服务架构
@@ -16,7 +16,7 @@
 
 ### 快速启动
 
-必要启动模块 
+必要启动模块
 - 启动认证中心uaa
     - 运行 UaaServerApp
 - 启动用户中心bussiness/user-center
@@ -25,19 +25,19 @@
     - 运行 sc-gateway的org.openea.SCGatewayApp
 - 启动前端工程web/back-web
     - 运行 BackWebApplication
-http://127.0.0.1:8066
+      http://127.0.0.1:8066
 
 - Demo账号
-  * 账号密码：admin/admin
-  * APM监控账号密码：admin/admin
-  * Grafana账号：zlt/zlt123
-  * txlcn事务管理器密码：admin
-  * 任务管理账号密码：admin/123456
-  * Sentinel：sentinel/sentinel
+    * 账号密码：admin/admin
+    * APM监控账号密码：admin/admin
+    * Grafana账号：zlt/zlt123
+    * txlcn事务管理器密码：admin
+    * 任务管理账号密码：admin/123456
+    * Sentinel：sentinel/sentinel
 
-- 单点登录demo (demo/sso-demo) 
-  * **ss-sso**：使用springSecurity来实现自动单点登录，非前后端分离   
-  * **web-sso**：前后端分离的单点登录
+- 单点登录demo (demo/sso-demo)
+    * **ss-sso**：使用springSecurity来实现自动单点登录，非前后端分离
+    * **web-sso**：前后端分离的单点登录
 
 ## 2. 项目总体架构图
 ![mark](doc/img/zlt-arch.jpg)
@@ -99,4 +99,4 @@ ea-msp(MicroService Platform) -- 父项目，公共依赖
 5. 相关知识
 
 - ZLT微服务框架文档  
-https://www.kancloud.cn/zlt2000/microservices-platform/919414
+  https://www.kancloud.cn/zlt2000/microservices-platform/919414

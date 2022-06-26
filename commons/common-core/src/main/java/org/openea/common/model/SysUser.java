@@ -8,10 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * @author zlt
- * 用户实体
- */
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_user")

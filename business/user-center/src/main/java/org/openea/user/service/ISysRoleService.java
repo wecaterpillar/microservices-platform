@@ -8,9 +8,7 @@ import org.openea.common.model.Result;
 import org.openea.common.model.SysRole;
 import org.openea.common.service.ISuperService;
 
-/**
-* @author zlt
- */
+
 public interface ISysRoleService extends ISuperService<SysRole> {
 	void saveRole(SysRole sysRole) throws Exception;
 

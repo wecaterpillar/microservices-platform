@@ -8,7 +8,6 @@ import java.io.Serializable;
 /**
  * 订单实体
  *
- * @author zlt
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

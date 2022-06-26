@@ -1,7 +1,7 @@
 package org.openea.gateway.auth;
 
 import org.openea.common.model.SysMenu;
-import org.openea.gateway.feign.MenuService;
+import org.openea.gateway.feign.AsynMenuService;
 import org.openea.oauth2.common.service.impl.DefaultPermissionServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -14,19 +14,19 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * url权限认证
  *
- * @author zlt
- * @date 2019/10/6
  */
 @Slf4j
 @Component
 public class PermissionAuthManager extends DefaultPermissionServiceImpl implements ReactiveAuthorizationManager<AuthorizationContext> {
     @Resource
-    private MenuService menuService;
+    private AsynMenuService asynMenuService;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext authorizationContext) {
@@ -40,6 +40,12 @@ public class PermissionAuthManager extends DefaultPermissionServiceImpl implemen
 
     @Override
     public List<SysMenu> findMenuByRoleCodes(String roleCodes) {
-        return menuService.findByRoleCodes(roleCodes);
+        Future<List<SysMenu>> futureResult = asynMenuService.findByRoleCodes(roleCodes);
+        try {
+            return futureResult.get();
+        } catch (Exception e) {
+            log.error("asynMenuService.findMenuByRoleCodes-error", e);
+        }
+        return Collections.emptyList();
     }
 }

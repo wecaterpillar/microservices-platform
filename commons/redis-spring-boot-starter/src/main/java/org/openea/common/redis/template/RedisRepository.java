@@ -1,24 +1,24 @@
 package org.openea.common.redis.template;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisClusterNode;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisServerCommands;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.SerializationUtils;
+import org.springframework.util.Assert;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Redis Repository
  * redis 基本操作 可扩展,基本够用了
  *
- * @author zlt
  */
 @Slf4j
 public class RedisRepository {
@@ -73,10 +73,40 @@ public class RedisRepository {
      *
      * @param key   redis主键
      * @param value 值
-     * @param time  过期时间(单位秒)
+     * @param time  过期时间
+     * @param timeUnit  过期时间单位
      */
+    public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, time, timeUnit);
+    }
     public void setExpire(final String key, final Object value, final long time) {
-        redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+        this.setExpire(key, value, time, TimeUnit.SECONDS);
+    }
+    public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit, RedisSerializer<Object> valueSerializer) {
+        byte[] rawKey = rawKey(key);
+        byte[] rawValue = rawValue(value, valueSerializer);
+
+        redisTemplate.execute(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                potentiallyUsePsetEx(connection);
+                return null;
+            }
+            public void potentiallyUsePsetEx(RedisConnection connection) {
+                if (!TimeUnit.MILLISECONDS.equals(timeUnit) || !failsafeInvokePsetEx(connection)) {
+                    connection.setEx(rawKey, TimeoutUtils.toSeconds(time, timeUnit), rawValue);
+                }
+            }
+            private boolean failsafeInvokePsetEx(RedisConnection connection) {
+                boolean failed = false;
+                try {
+                    connection.pSetEx(rawKey, time, rawValue);
+                } catch (UnsupportedOperationException e) {
+                    failed = true;
+                }
+                return !failed;
+            }
+        }, true);
     }
 
     /**
@@ -145,6 +175,41 @@ public class RedisRepository {
     public Object get(final String key) {
         return redisTemplate.opsForValue().get(key);
     }
+
+    /**
+     *获取原来key键对应的值并重新赋新值。
+     * @param key
+     * @param value
+     * @return
+     */
+    public String getAndSet(final String key,String value) {
+        String result = null;
+        if (StringUtils.isEmpty(key)){
+            log.error("非法入参");
+            return null;
+        }
+        try {
+            Object object =redisTemplate.opsForValue().getAndSet(key, value);
+            if (object !=null){
+                result = object.toString();
+            }
+        }catch (Exception e){
+            log.error("redisTemplate操作异常",e);
+        }
+        return result;
+    }
+    /**
+     * 根据key获取对象
+     *
+     * @param key the key
+     * @param valueSerializer 序列化
+     * @return the string
+     */
+    public Object get(final String key, RedisSerializer<Object> valueSerializer) {
+        byte[] rawKey = rawKey(key);
+        return redisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
+    }
+
 
     /**
      * Ops for hash hash operations.
@@ -361,6 +426,20 @@ public class RedisRepository {
     }
 
     /**
+     * redis List数据结构 : 返回列表 key 中指定区间内的元素，区间以偏移量 start 和 end 指定。
+     *
+     * @param key   the key
+     * @param start the start
+     * @param end   the end
+     * @param valueSerializer 序列化
+     * @return the list
+     */
+    public List<Object> getList(String key, int start, int end, RedisSerializer<Object> valueSerializer) {
+        byte[] rawKey = rawKey(key);
+        return redisTemplate.execute(connection -> deserializeValues(connection.lRange(rawKey, start, end), valueSerializer), true);
+    }
+
+    /**
      * redis List数据结构 : 批量存储
      *
      * @param key  the key
@@ -380,5 +459,36 @@ public class RedisRepository {
      */
     public void insert(String key, long index, Object value) {
         opsForList().set(key, index, value);
+    }
+
+    private byte[] rawKey(Object key) {
+        Assert.notNull(key, "non null key required");
+
+        if (key instanceof byte[]) {
+            return (byte[]) key;
+        }
+        RedisSerializer<Object> redisSerializer = (RedisSerializer<Object>)redisTemplate.getKeySerializer();
+        return redisSerializer.serialize(key);
+    }
+    private byte[] rawValue(Object value, RedisSerializer valueSerializer) {
+        if (value instanceof byte[]) {
+            return (byte[]) value;
+        }
+
+        return valueSerializer.serialize(value);
+    }
+
+    private List deserializeValues(List<byte[]> rawValues, RedisSerializer<Object> valueSerializer) {
+        if (valueSerializer == null) {
+            return rawValues;
+        }
+        return SerializationUtils.deserialize(rawValues, valueSerializer);
+    }
+
+    private Object deserializeValue(byte[] value, RedisSerializer<Object> valueSerializer) {
+        if (valueSerializer == null) {
+            return value;
+        }
+        return valueSerializer.deserialize(value);
     }
 }

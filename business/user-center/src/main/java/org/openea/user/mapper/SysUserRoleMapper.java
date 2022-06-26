@@ -11,10 +11,7 @@ import org.apache.ibatis.annotations.Select;
 
 import org.openea.common.model.SysRole;
 
-/**
- * @author zlt
- * 用户角色关系
- */
+
 @Mapper
 public interface SysUserRoleMapper extends SuperMapper<SysRoleUser> {
     int deleteUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);

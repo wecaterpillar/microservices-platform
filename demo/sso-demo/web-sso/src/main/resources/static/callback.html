@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8"/>
-    <title>EA-MSP</title>
+    <title>OpenEA</title>
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/sso.js"></script>
 </head>
@@ -26,9 +26,7 @@
         //获取token和用户信息
         $.ajax({url:'http://127.0.0.1:8081/token/'+code, success:function(result) {
             console.log(result);
-            sessionStorage.setItem('access_token', result.tokenInfo.access_token);
-            sessionStorage.setItem('username', result.userInfo.username);
-            sessionStorage.setItem('roles', result.roles);
+            sessionStorage.setItem('access_token', result);
             window.location = sessionStorage.getItem('visitUri');
         }});
     };

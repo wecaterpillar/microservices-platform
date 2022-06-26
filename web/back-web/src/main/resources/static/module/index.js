@@ -33,7 +33,7 @@ layui.define(['config', 'admin', 'layer', 'laytpl', 'element', 'form'], function
     var laytpl = layui.laytpl;
     var element = layui.element;
     var form = layui.form;
-
+    
     var index = {
         // 渲染左侧菜单栏
         initLeftNav: function () {

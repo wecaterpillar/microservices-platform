@@ -1,12 +1,12 @@
 package org.openea.oauth.service.impl;
 
+import org.openea.common.constant.SecurityConstants;
 import org.openea.common.feign.UserService;
-import org.openea.oauth.service.ZltUserDetailsService;
+import org.openea.oauth.service.EaUserDetailsService;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.security.SocialUserDetails;
-import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 
 import org.openea.common.model.LoginAppUser;
@@ -15,14 +15,19 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
 
-/**
- * @author zlt
- */
+
 @Slf4j
 @Service
-public class UserDetailServiceImpl implements ZltUserDetailsService, SocialUserDetailsService {
+public class UserDetailServiceImpl implements EaUserDetailsService {
+    private static final String ACCOUNT_TYPE = SecurityConstants.DEF_ACCOUNT_TYPE;
+
     @Resource
     private UserService userService;
+
+    @Override
+    public boolean supports(String accountType) {
+        return ACCOUNT_TYPE.equals(accountType);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) {

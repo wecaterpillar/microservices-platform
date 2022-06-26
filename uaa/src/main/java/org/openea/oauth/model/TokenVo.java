@@ -6,9 +6,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author zlt
- */
+
 @Setter
 @Getter
 public class TokenVo implements Serializable {
@@ -33,4 +31,8 @@ public class TokenVo implements Serializable {
     * 授权类型
     */
    private String grantType;
+   /**
+    * 账号类型
+    */
+   private String accountType;
 }

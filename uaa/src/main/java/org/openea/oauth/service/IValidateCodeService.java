@@ -2,6 +2,7 @@ package org.openea.oauth.service;
 
 import org.openea.common.model.Result;
 
+
 public interface IValidateCodeService {
     /**
      * 保存图形验证码

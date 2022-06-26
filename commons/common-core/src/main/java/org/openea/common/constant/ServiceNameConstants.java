@@ -3,8 +3,6 @@ package org.openea.common.constant;
 /**
  * 服务名称常量
  *
- * @author zlt
- * @date 2018/7/27 13:50
  */
 public interface ServiceNameConstants {
 

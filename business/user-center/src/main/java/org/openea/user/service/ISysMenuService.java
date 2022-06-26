@@ -6,9 +6,7 @@ import java.util.Set;
 import org.openea.common.model.SysMenu;
 import org.openea.common.service.ISuperService;
 
-/**
- * @author zlt
- */
+
 public interface ISysMenuService extends ISuperService<SysMenu> {
 	/**
 	 * 查询所有菜单

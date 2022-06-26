@@ -5,13 +5,10 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
-/**
- * @author zlt
- * @date 2019/1/4
- */
+
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.security")
+@ConfigurationProperties(prefix = "ea.security")
 @RefreshScope
 public class SecurityProperties {
     private AuthProperties auth = new AuthProperties();

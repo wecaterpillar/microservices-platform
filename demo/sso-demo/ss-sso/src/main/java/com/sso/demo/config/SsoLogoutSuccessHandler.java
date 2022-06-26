@@ -16,12 +16,10 @@ import java.io.IOException;
 /**
  * 登出成功处理类
  *
- * @author zlt
- * @date 2020/3/10
  */
 @Component
 public class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
-	@Value("${openea.logout-uri:''}")
+	@Value("${ea.logout-uri:''}")
 	private String logoutUri;
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();

@@ -1,9 +1,9 @@
 package org.openea.log.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.PageResult;
 import org.openea.search.client.service.IQueryService;
 import org.openea.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 慢查询日志
  *
- * @author zlt
  */
 @RestController
 public class SlowQueryLogController {
@@ -28,7 +27,7 @@ public class SlowQueryLogController {
             @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String")
     })
     @GetMapping(value = "/slowQueryLog")
-    public PageResult<JSONObject> getPage(SearchDto searchDto) {
+    public PageResult<JsonNode> getPage(SearchDto searchDto) {
         searchDto.setIsHighlighter(true);
         searchDto.setSortCol("timestamp");
         return queryService.strQuery("mysql-slowlog-*", searchDto);

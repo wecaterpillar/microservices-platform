@@ -3,9 +3,9 @@ package org.openea.gateway.route;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
+import org.openea.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -21,8 +21,6 @@ import java.util.concurrent.Executor;
 /**
  * nacos路由数据源
  *
- * @author zlt
- * @date 2019/10/7
  */
 @Slf4j
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
@@ -84,7 +82,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
     private List<RouteDefinition> getListByStr(String content) {
         if (StrUtil.isNotEmpty(content)) {
-            return JSONObject.parseArray(content, RouteDefinition.class);
+            return JsonUtil.toList(content, RouteDefinition.class);
         }
         return new ArrayList<>(0);
     }

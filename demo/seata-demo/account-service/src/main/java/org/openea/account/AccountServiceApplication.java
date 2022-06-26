@@ -9,8 +9,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * 账号
  *
- * @author zlt
- * @date 2019/9/14
  */
 @EnableDiscoveryClient
 @MapperScan({"org.openea.account.mapper"})

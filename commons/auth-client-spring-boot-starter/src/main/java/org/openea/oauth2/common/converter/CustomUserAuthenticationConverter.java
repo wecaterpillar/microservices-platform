@@ -1,7 +1,6 @@
 package org.openea.oauth2.common.converter;
 
 import org.openea.common.model.LoginAppUser;
-import org.openea.common.model.SysUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,8 +18,6 @@ import java.util.Map;
  * 优化自org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter
  * jwt返回的principal改为返回SysUser，增加扩展字段
  *
- * @author zlt
- * @date 2019/8/5
  */
 public class CustomUserAuthenticationConverter implements UserAuthenticationConverter {
     private Collection<? extends GrantedAuthority> defaultAuthorities;

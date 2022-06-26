@@ -3,10 +3,7 @@ package org.openea.search.service;
 import java.io.IOException;
 import java.util.Map;
 
-/**
- * @author zlt
- * @date 2019/4/24
- */
+
 public interface IAggregationService {
     /**
      * 访问统计聚合查询

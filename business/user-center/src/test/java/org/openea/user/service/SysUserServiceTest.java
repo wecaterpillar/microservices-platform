@@ -17,7 +17,6 @@ import java.util.Map;
 /**
  * SysUserServiceTest单元测试用例
  *
- * @author zlt
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest

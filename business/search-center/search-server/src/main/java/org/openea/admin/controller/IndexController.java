@@ -16,7 +16,6 @@ import java.util.*;
 /**
  * 索引管理
  *
- * @author zlt
  */
 @Slf4j
 @RestController

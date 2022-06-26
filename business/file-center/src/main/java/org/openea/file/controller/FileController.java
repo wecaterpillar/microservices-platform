@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.openea.common.model.Result;
 import org.openea.file.service.IFileService;
-import org.openea.common.model.PageResult;
-import org.openea.file.model.FileInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.openea.common.model.PageResult;
+import org.openea.file.model.FileInfo;
 
 import javax.annotation.Resource;
 

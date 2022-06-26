@@ -7,10 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/**
- * @author zlt
- * @date 2019/9/8
- */
+
 @Slf4j
 public class AddrUtil {
     private final static String UNKNOWN_STR = "unknown";

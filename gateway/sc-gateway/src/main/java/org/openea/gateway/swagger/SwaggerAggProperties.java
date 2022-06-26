@@ -11,12 +11,10 @@ import java.util.Set;
 /**
  * swagger聚合配置
  *
- * @author zlt
- * @date 2019/10/5
  */
 @Setter
 @Getter
-@ConfigurationProperties("openea.swagger-agg")
+@ConfigurationProperties("ea.swagger-agg")
 @RefreshScope
 public class SwaggerAggProperties {
     /**

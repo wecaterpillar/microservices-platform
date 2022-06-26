@@ -4,17 +4,17 @@ import org.openea.log.model.Audit;
 import org.openea.log.service.IAuditService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 
 /**
  * 审计日志实现类-打印日志
  *
- * @author zlt
- * @date 2020/2/3
  */
 @Slf4j
-@ConditionalOnProperty(name = "openea.audit-log.log-type", havingValue = "logger", matchIfMissing = true)
+@Service
+@ConditionalOnProperty(name = "ea.audit-log.log-type", havingValue = "logger", matchIfMissing = true)
 public class LoggerAuditServiceImpl implements IAuditService {
     private static final String MSG_PATTERN = "{}|{}|{}|{}|{}|{}|{}|{}";
 

@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * 配置需要放权的url白名单
  *
- * @author zlt
  */
 @Setter
 @Getter
@@ -23,6 +22,7 @@ public class PermitProperties {
             "/*/v2/api-docs",
             "/swagger/api-docs",
             "/swagger-ui.html",
+            "/doc.html",
             "/swagger-resources/**",
             "/webjars/**",
             "/druid/**"

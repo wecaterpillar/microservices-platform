@@ -1,15 +1,12 @@
 package org.openea.search.service;
 
-import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.PageResult;
 import org.openea.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-/**
- * @author zlt
- * @date 2019/4/24
- */
+
 public interface ISearchService {
     /**
      * StringQuery通用搜索
@@ -17,5 +14,5 @@ public interface ISearchService {
      * @param searchDto 搜索Dto
      * @return
      */
-    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException;
+    PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException;
 }

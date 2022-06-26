@@ -7,11 +7,8 @@ import org.openea.oauth.model.Client;
 
 import java.util.Map;
 
-/**
- */
+
 public interface IClientService extends ISuperService<Client> {
-
-
     Result saveClient(Client clientDto) throws Exception;
 
     /**
@@ -23,4 +20,5 @@ public interface IClientService extends ISuperService<Client> {
 
     void delClient(long id);
 
+    Client loadClientByClientId(String clientId);
 }

@@ -9,8 +9,6 @@ import java.util.Collection;
 /**
  * 增加租户id，解决不同租户单点登录时角色没变化
  *
- * @author zlt
- * @date 2020/6/10
  */
 public class TenantUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private static final long serialVersionUID = -5638287853803374687L;

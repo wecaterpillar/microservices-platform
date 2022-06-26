@@ -12,8 +12,6 @@ import org.springframework.web.util.pattern.PathPatternParser;
 /**
  * 跨域配置
  *
- * @author zlt
- * @date 2019/10/5
  */
 @Configuration
 public class CorsConfig {
@@ -26,7 +24,7 @@ public class CorsConfig {
         // cookie跨域
         config.setAllowCredentials(Boolean.TRUE);
         config.addAllowedMethod(ALL);
-        config.addAllowedOrigin(ALL);
+        config.addAllowedOriginPattern(ALL);
         config.addAllowedHeader(ALL);
         // 配置前端js允许访问的自定义响应头
         config.addExposedHeader("setToken");

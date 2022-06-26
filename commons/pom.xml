@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openea</groupId>
-        <artifactId>ea-msp</artifactId>
-        <version>4.0.0</version>
+        <artifactId>msp</artifactId>
+        <version>5.3.0</version>
     </parent>
-    <artifactId>commons</artifactId>
+    <artifactId>ea-commons</artifactId>
     <description>通用组件</description>
     <packaging>pom</packaging>
 
@@ -16,10 +16,12 @@
         <module>db-spring-boot-starter</module>
         <module>swagger2-spring-boot-starter</module>
         <module>log-spring-boot-starter</module>
-        <module>ribbon-spring-boot-starter</module>
+        <module>loadbalancer-spring-boot-starter</module>
         <module>auth-client-spring-boot-starter</module>
         <module>sentinel-spring-boot-starter</module>
         <module>common-core</module>
         <module>elasticsearch-spring-boot-starter</module>
+        <module>oss-spring-boot-starter</module>
+        <module>zookeeper-spring-boot-starter</module>
     </modules>
 </project>

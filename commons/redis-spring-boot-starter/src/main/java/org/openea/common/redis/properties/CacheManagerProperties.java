@@ -6,13 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-/**
- * @author zlt
- * @date 2019/1/6
- */
+
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.cache-manager")
+@ConfigurationProperties(prefix = "ea.cache-manager")
 public class CacheManagerProperties {
     private List<CacheConfig> configs;
 

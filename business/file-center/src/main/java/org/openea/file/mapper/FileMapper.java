@@ -13,7 +13,6 @@ import org.apache.ibatis.annotations.Param;
 /**
  * 上传存储db
  *
- * @author zlt
  */
 @Mapper
 public interface FileMapper extends SuperMapper<FileInfo> {

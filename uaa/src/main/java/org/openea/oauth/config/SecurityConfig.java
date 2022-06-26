@@ -3,34 +3,39 @@ package org.openea.oauth.config;
 import org.openea.common.constant.SecurityConstants;
 import org.openea.common.properties.TenantProperties;
 import org.openea.oauth.filter.LoginProcessSetTenantFilter;
-import org.openea.oauth.handler.OauthLogoutSuccessHandler;
+import org.openea.oauth.password.PasswordAuthenticationProvider;
+import org.openea.oauth.service.impl.UserDetailServiceFactory;
 import org.openea.oauth.tenant.TenantAuthenticationSecurityConfig;
 import org.openea.oauth.tenant.TenantUsernamePasswordAuthenticationFilter;
 import org.openea.oauth.mobile.MobileAuthenticationSecurityConfig;
 import org.openea.oauth.openid.OpenIdAuthenticationSecurityConfig;
 import org.openea.common.config.DefaultPasswordConfig;
+import org.openea.oauth2.common.token.CustomWebAuthenticationDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * spring security配置
  * 在WebSecurityConfigurerAdapter不拦截oauth要开放的资源
+ *
  */
 @Configuration
 @Import(DefaultPasswordConfig.class)
@@ -43,13 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private AuthenticationEntryPoint authenticationEntryPoint;
 
 	@Resource
-	private UserDetailsService userDetailsService;
+	private UserDetailServiceFactory userDetailsServiceFactory;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Resource
-	private LogoutHandler oauthLogoutHandler;
+	private LogoutHandler logoutHandler;
+
+	@Resource
+	private LogoutSuccessHandler logoutSuccessHandler;
 
 	@Autowired
 	private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
@@ -66,12 +74,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private TenantProperties tenantProperties;
 
+	@Autowired
+	private AuthenticationDetailsSource<HttpServletRequest, CustomWebAuthenticationDetails> authenticationDetailsSource;
+
 	/**
 	 * 这一步的配置是必不可少的，否则SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
 	 * @return 认证管理对象
 	 */
 	@Bean
-	@Override
+    @Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
@@ -83,28 +94,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setFilterProcessesUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL);
 		filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
 		filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(SecurityConstants.LOGIN_FAILURE_PAGE));
+		filter.setAuthenticationDetailsSource(authenticationDetailsSource);
 		return filter;
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.anyRequest()
-				//授权服务器关闭basic认证
-				.permitAll()
-				.and()
+					.anyRequest()
+					//授权服务器关闭basic认证
+                    .permitAll()
+                    .and()
 				.logout()
-				.logoutUrl(SecurityConstants.LOGOUT_URL)
-				.logoutSuccessHandler(new OauthLogoutSuccessHandler())
-				.addLogoutHandler(oauthLogoutHandler)
-				.clearAuthentication(true)
-				.and()
-				.apply(openIdAuthenticationSecurityConfig)
-				.and()
+					.logoutUrl(SecurityConstants.LOGOUT_URL)
+					.logoutSuccessHandler(logoutSuccessHandler)
+					.addLogoutHandler(logoutHandler)
+					.clearAuthentication(true)
+					.and()
+                .apply(openIdAuthenticationSecurityConfig)
+                    .and()
 				.apply(mobileAuthenticationSecurityConfig)
-				.and()
+					.and()
 				.addFilterBefore(new LoginProcessSetTenantFilter(), UsernamePasswordAuthenticationFilter.class)
-				.csrf().disable()
+                .csrf().disable()
 				// 解决不允许显示在iframe的问题
 				.headers().frameOptions().disable().cacheControl();
 
@@ -112,14 +124,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			//解决不同租户单点登录时角色没变化
 			http.formLogin()
 					.loginPage(SecurityConstants.LOGIN_PAGE)
-					.and()
+						.and()
 					.addFilterAt(tenantAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
 					.apply(tenantAuthenticationSecurityConfig);
 		} else {
 			http.formLogin()
 					.loginPage(SecurityConstants.LOGIN_PAGE)
 					.loginProcessingUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL)
-					.successHandler(authenticationSuccessHandler);
+					.successHandler(authenticationSuccessHandler)
+					.authenticationDetailsSource(authenticationDetailsSource);
 		}
 
 
@@ -136,8 +149,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * 全局用户信息
 	 */
-	@Autowired
-	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) {
+		PasswordAuthenticationProvider provider = new PasswordAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setUserDetailsServiceFactory(userDetailsServiceFactory);
+		auth.authenticationProvider(provider);
 	}
+	/*public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}*/
 }

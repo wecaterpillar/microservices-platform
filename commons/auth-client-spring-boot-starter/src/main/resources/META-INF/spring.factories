@@ -1,7 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.openea.oauth2.common.config.SecurityPropertiesConfig,\
-org.openea.oauth2.common.store.AuthDbTokenStore,\
-org.openea.oauth2.common.store.AuthRedisTokenStore,\
-org.openea.oauth2.common.store.AuthJwtTokenStore,\
-org.openea.oauth2.common.store.ResJwtTokenStore
-
+org.openea.oauth2.common.AuthClientAutoConfiguration

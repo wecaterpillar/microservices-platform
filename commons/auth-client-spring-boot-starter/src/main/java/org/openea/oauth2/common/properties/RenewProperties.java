@@ -9,8 +9,6 @@ import java.util.List;
 /**
  * 续签配置
  *
- * @author zlt
- * @date 2019/7/9
  */
 @Setter
 @Getter

@@ -1,10 +1,7 @@
 package org.openea.common.model;
 
 
-/**
- * @author zlt
- * 用户类型
- */
+
 public enum UserType {
 
 	/**

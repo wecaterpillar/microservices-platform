@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.openea.common.exception.IdempotencyException;
 import org.openea.common.exception.LockException;
 import org.openea.common.lock.DistributedLock;
+import org.openea.common.lock.ZLock;
 import org.openea.common.service.ISuperService;
 
 import java.io.Serializable;
@@ -21,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * service实现父类
  *
- * @author zlt
- * @date 2019/1/10
  */
 public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements ISuperService<T> {
     @Override
@@ -33,13 +32,12 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
         if (StrUtil.isEmpty(lockKey)) {
             throw new LockException("lockKey is null");
         }
-        Object lock = null;
-        try {
-            //加锁
-            lock = locker.tryLock(lockKey, 10, 60, TimeUnit.SECONDS);
+        try (
+                ZLock lock = locker.tryLock(lockKey, 10, 60, TimeUnit.SECONDS);
+                ) {
             if (lock != null) {
                 //判断记录是否已存在
-                int count = super.count(countWrapper);
+                long count = super.count(countWrapper);
                 if (count == 0) {
                     return super.save(entity);
                 } else {
@@ -51,8 +49,6 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
             } else {
                 throw new LockException("锁等待超时");
             }
-        } finally {
-            locker.unlock(lock);
         }
     }
 
@@ -67,7 +63,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
             Class<?> cls = entity.getClass();
             TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
             if (null != tableInfo && StrUtil.isNotEmpty(tableInfo.getKeyProperty())) {
-                Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
+                Object idVal = ReflectionKit.getFieldValue(entity, tableInfo.getKeyProperty());
                 if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
                     if (StrUtil.isEmpty(msg)) {
                         msg = "已存在";

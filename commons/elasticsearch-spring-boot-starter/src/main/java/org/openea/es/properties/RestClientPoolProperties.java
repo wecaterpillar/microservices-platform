@@ -8,12 +8,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 /**
  * es的httpClient连接池配置
  *
- * @author zlt
- * @date 2020/3/28
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.elasticsearch.rest-pool")
+@ConfigurationProperties(prefix = "ea.elasticsearch.rest-pool")
 @RefreshScope
 public class RestClientPoolProperties {
     /**

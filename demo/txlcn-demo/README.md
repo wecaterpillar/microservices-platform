@@ -15,19 +15,19 @@
 
 ### 1. 初始化TxManager的数据
 
-执行`doc\sql\tx-manager.sql`和`doc\sql\tx_logger.sql`脚本
+执行`ea-doc\sql\tx-manager.sql`和`ea-doc\sql\tx_logger.sql`脚本
 
 ### 2. 修改TxManager的配置
 
-工程目录：`transaction\txlcn-tm`，修改nacos、数据库和redis
+工程目录：`ea-transaction\txlcn-tm`，修改nacos、数据库和redis
 
 ### 2. 启动TxManager
 
-工程目录：`transaction\txlcn-tm`
+工程目录：`ea-transaction\txlcn-tm`
 
 ### 3. 初始化demo的数据
 
-执行`demo\txlcn-demo\txlcn-demo.sql`脚本
+执行`ea-demo\txlcn-demo\txlcn-demo.sql`脚本
 
 ### 4. 修改3个服务的配置
 

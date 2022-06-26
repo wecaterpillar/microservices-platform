@@ -1,18 +1,18 @@
 @echo on
 @echo =============================================================
 @echo $                                                           $
-@echo $           Open EA Microservices-Platform                  $
+@echo $               OpenEA ESP                  $
 @echo $                                                           $
 @echo $                                                           $
 @echo $                                                           $
-@echo $  Open EA All Right Reserved                               $
-@echo $  Copyright (C) 2018-2050                                  $
+@echo $  OpenEA All Right Reserved                                   $
+@echo $  Copyright (C) 2019-2050                                  $
 @echo $                                                           $
 @echo =============================================================
 @echo.
 @echo off
 
-@title Open EA Microservices-Platform
+@title OpenEA ESP
 @color 0e
 
 set /p version=������汾��:

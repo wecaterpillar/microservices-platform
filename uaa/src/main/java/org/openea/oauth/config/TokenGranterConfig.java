@@ -4,13 +4,16 @@ import org.openea.oauth.granter.MobilePwdGranter;
 import org.openea.oauth.granter.OpenIdGranter;
 import org.openea.oauth.granter.PwdImgCodeGranter;
 import org.openea.oauth.service.IValidateCodeService;
+import org.openea.oauth.service.impl.CustomTokenServices;
+import org.openea.oauth.service.impl.UserDetailServiceFactory;
+import org.openea.oauth.service.impl.UserDetailsByNameServiceFactoryWrapper;
+import org.openea.oauth2.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
@@ -25,6 +28,7 @@ import org.springframework.security.oauth2.provider.request.DefaultOAuth2Request
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,8 +42,8 @@ public class TokenGranterConfig {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    @Resource
+    private UserDetailServiceFactory userDetailsServiceFactory;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -62,11 +66,15 @@ public class TokenGranterConfig {
 
     private TokenGranter tokenGranter;
 
+    @Resource
+    private SecurityProperties securityProperties;
+
     /**
      * 授权模式
      */
     @Bean
-    public TokenGranter tokenGranter() {
+    @ConditionalOnMissingBean
+    public TokenGranter tokenGranter(DefaultTokenServices tokenServices) {
         if (tokenGranter == null) {
             tokenGranter = new TokenGranter() {
                 private CompositeTokenGranter delegate;
@@ -74,7 +82,7 @@ public class TokenGranterConfig {
                 @Override
                 public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
                     if (delegate == null) {
-                        delegate = new CompositeTokenGranter(getAllTokenGranters());
+                        delegate = new CompositeTokenGranter(getAllTokenGranters(tokenServices));
                     }
                     return delegate.grant(grantType, tokenRequest);
                 }
@@ -86,8 +94,7 @@ public class TokenGranterConfig {
     /**
      * 所有授权模式：默认的5种模式 + 自定义的模式
      */
-    private List<TokenGranter> getAllTokenGranters() {
-        AuthorizationServerTokenServices tokenServices = tokenServices();
+    protected List<TokenGranter> getAllTokenGranters(DefaultTokenServices tokenServices) {
         AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices();
         OAuth2RequestFactory requestFactory = requestFactory();
         //获取默认的授权模式
@@ -124,14 +131,6 @@ public class TokenGranterConfig {
         return tokenGranters;
     }
 
-    private AuthorizationServerTokenServices tokenServices() {
-        if (tokenServices != null) {
-            return tokenServices;
-        }
-        this.tokenServices = createDefaultTokenServices();
-        return tokenServices;
-    }
-
     private AuthorizationCodeServices authorizationCodeServices() {
         if (authorizationCodeServices == null) {
             authorizationCodeServices = new InMemoryAuthorizationCodeServices();
@@ -143,14 +142,16 @@ public class TokenGranterConfig {
         return new DefaultOAuth2RequestFactory(clientDetailsService);
     }
 
-    private DefaultTokenServices createDefaultTokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
+    @Bean
+    @ConditionalOnMissingBean
+    protected DefaultTokenServices createDefaultTokenServices() {
+        DefaultTokenServices tokenServices = new CustomTokenServices(securityProperties.getAuth());
         tokenServices.setTokenStore(tokenStore);
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setReuseRefreshToken(reuseRefreshToken);
         tokenServices.setClientDetailsService(clientDetailsService);
         tokenServices.setTokenEnhancer(tokenEnhancer());
-        addUserDetailsService(tokenServices, this.userDetailsService);
+        addUserDetailsService(tokenServices);
         return tokenServices;
     }
 
@@ -163,10 +164,10 @@ public class TokenGranterConfig {
         return null;
     }
 
-    private void addUserDetailsService(DefaultTokenServices tokenServices, UserDetailsService userDetailsService) {
-        if (userDetailsService != null) {
+    private void addUserDetailsService(DefaultTokenServices tokenServices) {
+        if (this.userDetailsServiceFactory != null) {
             PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-            provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
+            provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceFactoryWrapper<>(this.userDetailsServiceFactory));
             tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
         }
     }

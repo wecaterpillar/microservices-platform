@@ -1,17 +1,15 @@
 package org.openea.oauth.tenant;
 
+import org.openea.oauth.password.PasswordAuthenticationProvider;
 import org.openea.oauth2.common.token.TenantUsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 增加租户id，解决不同租户单点登录时角色没变化
  *
- * @author zlt
- * @date 2020/6/10
  */
-public class TenantAuthenticationProvider extends DaoAuthenticationProvider {
+public class TenantAuthenticationProvider extends PasswordAuthenticationProvider {
     @Override
     protected Authentication createSuccessAuthentication(Object principal,
                                                          Authentication authentication, UserDetails user) {

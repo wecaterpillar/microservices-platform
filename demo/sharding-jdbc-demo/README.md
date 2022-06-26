@@ -24,7 +24,7 @@ sharding-jdbc详细的配置项说明：https://www.kancloud.cn/zlt2000/microser
 
 ### 2. 初始化数据
 
-执行`demo\sharding-jdbc-demo\sharding-jdbc-demo.sql`脚本
+执行`ea-demo\sharding-jdbc-demo\sharding-jdbc-demo.sql`脚本
 
 ### 3. 启动工程
 

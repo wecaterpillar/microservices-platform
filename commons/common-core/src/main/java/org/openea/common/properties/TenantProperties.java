@@ -10,12 +10,10 @@ import java.util.List;
 
 /**
  * 多租户配置
- * @author zlt
- * @date 2019/8/5
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "openea.tenant")
+@ConfigurationProperties(prefix = "ea.tenant")
 @RefreshScope
 public class TenantProperties {
     /**

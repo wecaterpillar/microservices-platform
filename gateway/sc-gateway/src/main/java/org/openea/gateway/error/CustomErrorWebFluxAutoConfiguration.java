@@ -25,8 +25,6 @@ import java.util.List;
 /**
  * 自定义异常处理
  *
- * @author zlt
- * @date 2020/3/30
  */
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)

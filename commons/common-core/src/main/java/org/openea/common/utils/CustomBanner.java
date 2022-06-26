@@ -8,10 +8,7 @@ import com.nepxion.banner.LogoBanner;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author zlt
- * @date 2019/8/28
- */
+
 public class CustomBanner {
     public static void show(LogoBanner logoBanner, Description... descriptionList) {
         String bannerShown = System.getProperty(BannerConstant.BANNER_SHOWN, "true");

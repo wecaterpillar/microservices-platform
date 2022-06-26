@@ -10,9 +10,7 @@ import org.apache.ibatis.annotations.Param;
 
 import org.openea.oauth.model.Client;
 
-/**
- * @author zlt
- */
+
 @Mapper
 public interface ClientMapper extends SuperMapper<Client> {
     List<Client> findList(Page<Client> page, @Param("params") Map<String, Object> params );

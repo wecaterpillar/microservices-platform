@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 /**
  * 库存
  *
- * @author zlt
- * @date 2019/9/14
  */
 @RestController
 @RequestMapping("storage")

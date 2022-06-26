@@ -1,11 +1,10 @@
 package org.openea.search.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import org.elasticsearch.action.search.SearchRequest;
 import org.openea.common.constant.CommonConstant;
 import org.openea.search.model.AggItemVo;
 import org.openea.search.service.IAggregationService;
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -17,7 +16,6 @@ import org.elasticsearch.search.aggregations.bucket.range.Range;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.ParsedCardinality;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -34,18 +32,13 @@ import java.util.Map;
 /**
  * 聚合分析服务
  *
- * @author zlt
- * @date 2019/5/7
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
  */
 @Service
 public class AggregationServiceImpl implements IAggregationService {
-    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private final RestHighLevelClient client;
 
-    public AggregationServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate) {
-        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+    public AggregationServiceImpl(RestHighLevelClient client) {
+        this.client = client;
     }
 
     /**
@@ -151,9 +144,9 @@ public class AggregationServiceImpl implements IAggregationService {
                                     .fixedInterval(new DateHistogramInterval("90m"))
                                     .format(CommonConstant.DATETIME_FORMAT)
                                     //时区相差8小时
-                                    .timeZone(ZoneId.of("GMT+8"))
+                                    .timeZone(ZoneId.of(CommonConstant.TIME_ZONE_GMT8))
                                     .minDocCount(0L)
-                                    .extendedBounds(new ExtendedBounds(
+                                    .extendedBounds(new LongBounds(
                                             curDateTime.minusDays(1).format(DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)),
                                             curDateTime.format(DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT))
                                     ))
@@ -177,9 +170,9 @@ public class AggregationServiceImpl implements IAggregationService {
                                     .calendarInterval(DateHistogramInterval.DAY)
                                     .format(CommonConstant.DATE_FORMAT)
                                     //时区相差8小时
-                                    .timeZone(ZoneId.of("GMT+8"))
+                                    .timeZone(ZoneId.of(CommonConstant.TIME_ZONE_GMT8))
                                     .minDocCount(0L)
-                                    .extendedBounds(new ExtendedBounds(
+                                    .extendedBounds(new LongBounds(
                                             localDate.minusDays(6).format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT)),
                                             localDate.format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT))
                                     ))
@@ -220,7 +213,6 @@ public class AggregationServiceImpl implements IAggregationService {
                     )
         ).size(0);
 
-        RestHighLevelClient client = elasticsearchRestTemplate.getClient();
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
         Aggregations aggregations = response.getAggregations();
         Map<String, Object> result = new HashMap<>(15);

@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 /**
  * GenUtils测试用例
  *
- * @author zlt
- * @date 2019/5/10
  */
 @SpringBootTest
 public class GenUtilsTest {

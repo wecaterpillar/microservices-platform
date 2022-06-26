@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 
-/**
- * @Author: zlt
- */
+
 @RestController
 @Api(tags = "代码生成器")
 @RequestMapping("/generator")

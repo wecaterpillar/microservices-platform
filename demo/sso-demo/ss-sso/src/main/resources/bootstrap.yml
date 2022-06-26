@@ -5,19 +5,19 @@ spring:
   application:
     name: sso-demo
 
-openea:
+ea:
   api-uaa:
     url: http://127.0.0.1:9900/api-uaa/oauth
-  logout-uri: ${openea.api-uaa.url}/remove/token?redirect_uri=http://127.0.0.1:8080&access_token=
+  logout-uri: ${ea.api-uaa.url}/remove/token?redirect_uri=http://127.0.0.1:8080&access_token=
 
 security:
   oauth2:
     sso:
       login-path: /singleLogin
     client:
-      client-id: zlt
-      client-secret: zlt
-      access-token-uri: ${openea.api-uaa.url}/token
-      user-authorization-uri: ${openea.api-uaa.url}/authorize
+      client-id: ea
+      client-secret: ea
+      access-token-uri: ${ea.api-uaa.url}/token
+      user-authorization-uri: ${ea.api-uaa.url}/authorize
     resource:
-      token-info-uri: ${openea.api-uaa.url}/check_token
+      token-info-uri: ${ea.api-uaa.url}/check_token

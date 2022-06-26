@@ -9,8 +9,6 @@ import java.util.List;
 /**
  * url权限配置
  *
- * @author zlt
- * @date 2019/8/2
  */
 @Setter
 @Getter

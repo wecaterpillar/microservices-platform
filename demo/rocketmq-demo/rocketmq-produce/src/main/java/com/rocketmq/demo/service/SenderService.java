@@ -9,9 +9,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-/**
- * @author zlt
- */
+
 @Service
 public class SenderService {
 	@Autowired

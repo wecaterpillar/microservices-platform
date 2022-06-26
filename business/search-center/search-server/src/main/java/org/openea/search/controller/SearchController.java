@@ -1,12 +1,11 @@
 package org.openea.search.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import org.openea.common.model.*;
 
 import org.openea.common.model.PageResult;
 import org.openea.search.model.SearchDto;
 import org.openea.search.service.ISearchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
@@ -17,7 +16,6 @@ import java.io.IOException;
 /**
  * 通用搜索
  *
- * @author zlt
  */
 @Slf4j
 @RestController
@@ -36,7 +34,7 @@ public class SearchController {
      * @param searchDto 搜索Dto
      */
     @PostMapping("/{indexName}")
-    public PageResult<JSONObject> strQuery(@PathVariable String indexName, @RequestBody(required = false) SearchDto searchDto) throws IOException {
+    public PageResult<JsonNode> strQuery(@PathVariable String indexName, @RequestBody(required = false) SearchDto searchDto) throws IOException {
         if (searchDto == null) {
             searchDto = new SearchDto();
         }

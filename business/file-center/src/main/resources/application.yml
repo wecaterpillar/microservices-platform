@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://${openea.datasource.ip}:3306/file_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
-    username: ${openea.datasource.username}
-    password: ${openea.datasource.password}
+    url: jdbc:mysql://${ea.datasource.ip}:3306/file_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: ${ea.datasource.username}
+    password: ${ea.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:
@@ -13,18 +13,16 @@ mybatis-plus:
     db-config:
       id-type: INPUT
 
-openea:
+ea:
   file-server:
-    type: fastdfs
-    fdfs:
-      web-url: ${openea.fdfs.web-url}
-    #oss配置
-    #oss:
-    #  access-key: tpi8mObnfzZi4ggBX8Bw7zydjoTQ0WeML3RkPKsX
-    #  accessKeySecret: HZBXmSyUTy-haYp0KbBTtsil-GoKjVS2kDKT8Yow
-    #  endpoint: http://pkqtmn0p1.bkt.clouddn.com
-    #  bucketName: public-oss
-    #  domain:
+    type: s3
+    #fdfs:
+    #  web-url: ${ea.fdfs.web-url}
+    s3:
+      access-key: ${ea.s3.access-key}
+      accessKeySecret: ${ea.s3.accessKeySecret}
+      endpoint: ${ea.s3.endpoint}
+      bucketName: ${ea.s3.bucketName}
   swagger:
     enabled: true
     title: 文件中心
@@ -36,7 +34,7 @@ openea:
     enable: true
 
 #fastDFS配置
-fdfs:
-  soTimeout: 1500
-  connectTimeout: 600
-  trackerList: ${openea.fdfs.trackerList}
+#fdfs:
+#  soTimeout: 1500
+#  connectTimeout: 600
+#  trackerList: ${ea.fdfs.trackerList}

@@ -10,7 +10,6 @@ import java.io.Serializable;
 /**
  * 订单实体
  *
- * @author zlt
  */
 @Data
 @NoArgsConstructor

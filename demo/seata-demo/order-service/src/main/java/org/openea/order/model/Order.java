@@ -12,8 +12,6 @@ import java.math.BigDecimal;
 /**
  * 订单
  *
- * @author zlt
- * @date 2019/9/14
  */
 @Data
 @Accessors(chain = true)

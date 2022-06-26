@@ -1,26 +1,29 @@
 package org.openea.user.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
-import org.openea.common.constant.CommonConstant;
 import org.openea.common.lock.DistributedLock;
+import org.openea.common.model.*;
 import org.openea.common.model.PageResult;
 import org.openea.common.model.Result;
 import org.openea.common.model.SysRole;
 import org.openea.common.service.impl.SuperServiceImpl;
-import org.openea.user.mapper.SysRoleMapper;
-import org.openea.user.mapper.SysRoleMenuMapper;
-import org.openea.user.mapper.SysUserRoleMapper;
-import org.openea.user.service.ISysRoleService;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.openea.user.mapper.SysRoleMapper;
+import org.openea.user.mapper.SysRoleMenuMapper;
+import org.openea.user.mapper.SysUserRoleMapper;
+import org.openea.user.service.ISysRoleService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author 作者 owen E-mail: 624191343@qq.com
@@ -28,7 +31,7 @@ import java.util.Map;
 @Slf4j
 @Service
 public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
-    private final static String LOCK_KEY_ROLECODE = CommonConstant.LOCK_KEY_PREFIX+"rolecode:";
+    private final static String LOCK_KEY_ROLECODE = "rolecode:";
 
     @Resource
     private SysUserRoleMapper userRoleMapper;

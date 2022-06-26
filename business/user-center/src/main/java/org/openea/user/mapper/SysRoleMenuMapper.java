@@ -11,10 +11,7 @@ import org.apache.ibatis.annotations.Param;
 
 import org.openea.common.model.SysMenu;
 
-/**
- * @author zlt
- * 角色菜单
- */
+
 @Mapper
 public interface SysRoleMenuMapper extends SuperMapper<SysRoleMenu> {
 	@Insert("insert into sys_role_menu(role_id, menu_id) values(#{roleId}, #{menuId})")

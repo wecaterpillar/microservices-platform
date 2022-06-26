@@ -3,7 +3,7 @@ package org.openea.common.feign.fallback;
 import org.openea.common.feign.UserService;
 import org.openea.common.model.LoginAppUser;
 import org.openea.common.model.SysUser;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 
 /**

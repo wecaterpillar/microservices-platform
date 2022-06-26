@@ -5,7 +5,7 @@ spring:
   application:
     name: sepSso-demo
 
-openea:
+ea:
   sso:
     client-id: app
     client-secret: app

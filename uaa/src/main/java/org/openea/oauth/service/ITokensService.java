@@ -5,9 +5,7 @@ import org.openea.oauth.model.TokenVo;
 
 import java.util.Map;
 
-/**
- * @author zlt
- */
+
 public interface ITokensService {
     /**
      * 查询token列表

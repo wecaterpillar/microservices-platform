@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.openea.common.model.PageResult;
 import org.springframework.stereotype.Service;
 
-/**
- * @Author zlt
- */
+
 @Service
 public interface SysGeneratorService extends IService {
      PageResult queryList(Map<String, Object> map);

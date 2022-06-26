@@ -2,9 +2,7 @@ package org.openea.admin.model;
 
 import lombok.Data;
 
-/**
- * @author zlt
- */
+
 @Data
 public class IndexDto {
     /**
