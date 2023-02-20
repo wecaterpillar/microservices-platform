@@ -29,6 +29,7 @@
 
 - Demo账号
     * 账号密码：admin/admin
+    * 配置中心：nacos/nacos
     * APM监控账号密码：admin/admin
     * Grafana账号：zlt/zlt123
     * txlcn事务管理器密码：admin

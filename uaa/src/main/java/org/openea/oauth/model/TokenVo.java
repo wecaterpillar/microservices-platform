@@ -35,4 +35,6 @@ public class TokenVo implements Serializable {
     * 账号类型
     */
    private String accountType;
+
+   // ip
 }
